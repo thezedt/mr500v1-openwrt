@@ -1,0 +1,6 @@
+[/etc]# cat passwd.bak
+admin:$1$$iC.dUsGpxNNJGeOm1dFio/:0:0:root:/:/bin/sh
+dropbear:x:500:500:dropbear:/var/dropbear:/bin/sh
+nobody:*:0:0:nobody:/:/bin/sh
+ 
+$1$$iC.dUsGpxNNJGeOm1dFio/ = 1234

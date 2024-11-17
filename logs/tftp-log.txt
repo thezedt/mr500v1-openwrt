@@ -1,0 +1,62 @@
+============================================
+Ralink UBoot Version: 5.0.0.0
+--------------------------------------------
+ASIC MT7621A DualCore (MAC to MT7530 Mode)
+DRAM_CONF_FROM: Auto-Detection
+DRAM_TYPE: DDR3
+DRAM bus: 16 bit
+Xtal Mode=3 OCP Ratio=1/3
+Flash component: SPI Flash
+Date:Dec 29 2022  Time:09:42:47
+============================================
+icache: sets:256, ways:4, linesz:32 ,total:32768
+dcache: sets:256, ways:4, linesz:32 ,total:32768
+
+ ##### The CPU freq = 880 MHZ ####
+ estimate memory size =128 Mbytes
+#Reset_MT7530
+set LAN/WAN WLLLL                                                                                                                                                                                                                                                                       0
+
+
+4: System Enter Boot Command Line Interface.
+
+U-Boot 1.1.3 (Dec 29 2022 - 09:42:47)
+MT7621 # ?
+?       - alias for 'help'
+bootm   - boot application image from memory
+cp      - memory copy
+dump    - dump mem to file
+erase   - erase SPI FLASH memory
+go      - start application at address 'addr'
+help    - print online help
+loadb   - load binary file over serial line (kermit mode)
+mcmp    - memory compare
+md      - memory display
+mdio   - Ralink PHY register R/W command !!
+mm      - memory modify (auto-incrementing)
+nm      - memory modify (constant address)
+printenv- print environment variables
+reset   - Perform RESET of the CPU
+rf      - read/write rf register
+saveenv - save environment variables to persistent storage
+setenv  - set environment variables
+spi     - spi command
+tftpboot- boot image via network using TFTP protocol
+version - print monitor version
+MT7621 # tftpboot
+
+ NetLoop,call eth_halt !
+
+ NetLoop,call eth_init !
+Trying Eth0 (10/100-M)
+
+ Waitting for RX_DMA_BUSY status Start... done
+
+
+ ETH_STATE_ACTIVE!!
+*** Warning: no boot file name; using 'test.bin'
+TFTP from server 192.168.0.5; our IP address is 192.168.0.1
+Filename 'test.bin'.
+
+ TIMEOUT_COUNT=10,Load address: 0x84000000
+ 
