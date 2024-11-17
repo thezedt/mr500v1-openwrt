@@ -1,2 +1,2 @@
-# mr500v1-openwrt
-OpenWrt for TP-Link Archer MR500(v1) development space
+# MR500v1
+A place for OpenWrt attempts for TP-Link Archer MR500(v1)

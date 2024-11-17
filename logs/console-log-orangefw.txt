@@ -1,0 +1,1426 @@
+
+
+U-Boot 1.1.3 (Dec 29 2022 - 09:42:47)
+
+Board: Ralink APSoC DRAM:  128 MB
+relocate_code Pointer at: 87fa0000
+
+Config XHCI 40M PLL
+flash manufacture id: 1c, device id 70 18
+find flash: EN25QH128A
+*** Warning - bad CRC, using default environment
+
+============================================
+Ralink UBoot Version: 5.0.0.0
+--------------------------------------------
+ASIC MT7621A DualCore (MAC to MT7530 Mode)
+DRAM_CONF_FROM: Auto-Detection
+DRAM_TYPE: DDR3
+DRAM bus: 16 bit
+Xtal Mode=3 OCP Ratio=1/3
+Flash component: SPI Flash
+Date:Dec 29 2022  Time:09:42:47
+============================================
+icache: sets:256, ways:4, linesz:32 ,total:32768
+dcache: sets:256, ways:4, linesz:32 ,total:32768
+
+ ##### The CPU freq = 880 MHZ ####
+ estimate memory size =128 Mbytes
+#Reset_MT7530
+set LAN/WAN WLLLL                                                                                                                                                                                                                                                                       0
+
+disable Switch Phy
+
+3: System Boot system code via Flash.
+## Booting image at bc020200 ...
+   Image Name:   Linux Kernel Image
+   Image Type:   MIPS Linux Kernel Image (lzma compressed)
+   Data Size:    1944913 Bytes =  1.9 MB
+   Load Address: 81001000
+   Entry Point:  813cfd00
+   Verifying Checksum ... OK
+   Uncompressing Kernel Image ... OK
+No initrd
+## Transferring control to Linux (at address 813cfd00) ...
+## Giving linux memsize in MB, 128
+
+Starting kernel ...
+
+
+LINUX started...
+
+ THIS IS ASIC
+
+SDK 5.0.S.0
+[    0.000000] Linux version 3.10.14 (tp-link@Sohoidev) (gcc version 4.6.3 (Buildroot 2012.11.1) ) #1 SMP Thu Dec 29 09:48:05 CST 2022
+[    0.000000]
+[    0.000000]  The CPU feqenuce set to 880 MHz
+[    0.000000] GCMP present
+[    0.000000] CPU0 revision is: 0001992f (MIPS 1004Kc)
+[    0.000000] Software DMA cache coherency
+[    0.000000] Determined physical RAM map:
+[    0.000000]  memory: 08000000 @ 00000000 (usable)
+[    0.000000] User-defined physical RAM map:
+[    0.000000]  memory: 07fff000 @ 00000000 (usable)
+[    0.000000] Initrd not found or empty - disabling initrd
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x00000000-0x00ffffff]
+[    0.000000]   Normal   [mem 0x01000000-0x07ffefff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x00000000-0x07ffefff]
+[    0.000000] Detected 3 available secondary CPU(s)
+[    0.000000] Primary instruction cache 32kB, 4-way, VIPT, linesize 32 bytes.
+[    0.000000] Primary data cache 32kB, 4-way, PIPT, no aliases, linesize 32 bytes
+[    0.000000] MIPS secondary cache 256kB, 8-way, linesize 32 bytes.
+[    0.000000] PERCPU: Embedded 7 pages/cpu @816a3000 s7040 r8192 d13440 u32768
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 32511
+[    0.000000] PID hash table entries: 512 (order: -1, 2048 bytes)
+[    0.000000] Dentry cache hash table entries: 16384 (order: 4, 65536 bytes)
+[    0.000000] Inode-cache hash table entries: 8192 (order: 3, 32768 bytes)
+[    0.000000] Writing ErrCtl register=0007132c
+[    0.000000] Readback ErrCtl register=0007132c
+[    0.000000] Memory: 124048k/131068k available (3938k kernel code, 7020k reserved, 1319k data, 240k init, 0k highmem)
+[    0.000000] Hierarchical RCU implementation.
+[    0.000000] NR_IRQS:128
+[    0.000000] console [ttyS1] enabled
+[    0.104000] Calibrating delay loop... 574.46 BogoMIPS (lpj=1148928)
+[    0.132000] pid_max: default: 32768 minimum: 301
+[    0.136000] Mount-cache hash table entries: 512
+[    0.140000] launch: starting cpu1
+[    0.144000] launch: cpu1 gone!
+[    0.144000] CPU1 revision is: 0001992f (MIPS 1004Kc)
+[    0.144000] Primary instruction cache 32kB, 4-way, VIPT, linesize 32 bytes.
+[    0.144000] Primary data cache 32kB, 4-way, PIPT, no aliases, linesize 32 bytes
+[    0.144000] MIPS secondary cache 256kB, 8-way, linesize 32 bytes.
+[    0.176000] Synchronize counters for CPU 1: done.
+[    0.180000] launch: starting cpu2
+[    0.184000] launch: cpu2 gone!
+[    0.184000] CPU2 revision is: 0001992f (MIPS 1004Kc)
+[    0.184000] Primary instruction cache 32kB, 4-way, VIPT, linesize 32 bytes.
+[    0.184000] Primary data cache 32kB, 4-way, PIPT, no aliases, linesize 32 bytes
+[    0.184000] MIPS secondary cache 256kB, 8-way, linesize 32 bytes.
+[    0.216000] Synchronize counters for CPU 2: done.
+[    0.220000] launch: starting cpu3
+[    0.224000] launch: cpu3 gone!
+[    0.224000] CPU3 revision is: 0001992f (MIPS 1004Kc)
+[    0.224000] Primary instruction cache 32kB, 4-way, VIPT, linesize 32 bytes.
+[    0.224000] Primary data cache 32kB, 4-way, PIPT, no aliases, linesize 32 bytes
+[    0.224000] MIPS secondary cache 256kB, 8-way, linesize 32 bytes.
+[    0.252000] Synchronize counters for CPU 3: done.
+[    0.256000] Brought up 4 CPUs
+[    0.260000] devtmpfs: initialized
+[    0.264000] NET: Registered protocol family 16
+[    0.560000] release PCIe RST: RALINK_RSTCTRL = 7000000
+[    0.564000] PCIE PHY initialize
+[    0.564000] ***** Xtal 40MHz *****
+[    0.568000] start MT7621 PCIe register access
+[    1.160000] RALINK_RSTCTRL = 7000000
+[    1.164000] RALINK_CLKCFG1 = 77ffeff8
+[    1.164000]
+[    1.164000] *************** MT7621 PCIe RC mode *************
+[    1.656000] PCIE2 no card, disable it(RST&CLK)
+[    1.660000] pcie_link status = 0x3
+[    1.660000] RALINK_RSTCTRL= 3000000
+[    1.664000] *** Configure Device number setting of Virtual PCI-PCI bridge ***
+[    1.668000] RALINK_PCI_PCICFG_ADDR = 21007f2 -> 21007f2
+[    1.672000] PCIE0 enabled
+[    1.672000] PCIE1 enabled
+[    1.676000] interrupt enable status: 300000
+[    1.680000] Port 1 N_FTS = 1b105000
+[    1.680000] Port 0 N_FTS = 1b105000
+[    1.684000] config reg done
+[    1.684000] init_rt2880pci done
+[    1.696000] bio: create slab <bio-0> at 0
+[    1.700000] usbcore: registered new interface driver usbfs
+[    1.704000] usbcore: registered new interface driver hub
+[    1.708000] usbcore: registered new device driver usb
+[    1.716000] PCI host bridge to bus 0000:00
+[    1.720000] pci_bus 0000:00: root bus resource [mem 0x60000000-0x6fffffff]
+[    1.724000] pci_bus 0000:00: root bus resource [io  0x1e160000-0x1e16ffff]
+[    1.732000] pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+[    1.740000] pci 0000:00:00.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+[    1.748000] pci 0000:00:01.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+[    1.756000] pci 0000:00:00.0: BAR 0: can't assign mem (size 0x80000000)
+[    1.764000] pci 0000:00:01.0: BAR 0: can't assign mem (size 0x80000000)
+[    1.772000] pci 0000:00:00.0: BAR 8: assigned [mem 0x60000000-0x600fffff]
+[    1.776000] pci 0000:00:01.0: BAR 9: assigned [mem 0x60100000-0x602fffff pref]
+[    1.784000] pci 0000:00:00.0: BAR 1: assigned [mem 0x60300000-0x6030ffff]
+[    1.792000] pci 0000:00:01.0: BAR 1: assigned [mem 0x60310000-0x6031ffff]
+[    1.800000] pci 0000:01:00.0: BAR 0: assigned [mem 0x60000000-0x600fffff]
+[    1.804000] pci 0000:00:00.0: PCI bridge to [bus 01]
+[    1.808000] pci 0000:00:00.0:   bridge window [mem 0x60000000-0x600fffff]
+[    1.816000] pci 0000:02:00.0: BAR 0: assigned [mem 0x60100000-0x601fffff 64bit pref]
+[    1.824000] pci 0000:02:00.0: BAR 2: assigned [mem 0x60200000-0x60203fff 64bit pref]
+[    1.832000] pci 0000:02:00.0: BAR 4: assigned [mem 0x60204000-0x60204fff 64bit pref]
+[    1.840000] pci 0000:00:01.0: PCI bridge to [bus 02]
+[    1.844000] pci 0000:00:01.0:   bridge window [mem 0x60100000-0x602fffff pref]
+[    1.852000] PCI: Enabling device 0000:00:00.0 (0004 -> 0006)
+[    1.856000] PCI: Enabling device 0000:00:01.0 (0004 -> 0006)
+[    1.864000] BAR0 at slot 0 = 0
+[    1.868000] bus=0x0, slot = 0x0
+[    1.868000] res[0]->start = 0
+[    1.872000] res[0]->end = 0
+[    1.876000] res[1]->start = 60300000
+[    1.880000] res[1]->end = 6030ffff
+[    1.884000] res[2]->start = 0
+[    1.884000] res[2]->end = 0
+[    1.888000] res[3]->start = 0
+[    1.892000] res[3]->end = 0
+[    1.892000] res[4]->start = 0
+[    1.896000] res[4]->end = 0
+[    1.900000] res[5]->start = 0
+[    1.904000] res[5]->end = 0
+[    1.904000] BAR0 at slot 1 = 0
+[    1.908000] bus=0x0, slot = 0x1
+[    1.912000] res[0]->start = 0
+[    1.916000] res[0]->end = 0
+[    1.916000] res[1]->start = 60310000
+[    1.920000] res[1]->end = 6031ffff
+[    1.924000] res[2]->start = 0
+[    1.928000] res[2]->end = 0
+[    1.928000] res[3]->start = 0
+[    1.932000] res[3]->end = 0
+[    1.936000] res[4]->start = 0
+[    1.940000] res[4]->end = 0
+[    1.940000] res[5]->start = 0
+[    1.944000] res[5]->end = 0
+[    1.948000] bus=0x1, slot = 0x0, irq=0x4
+[    1.952000] res[0]->start = 60000000
+[    1.956000] res[0]->end = 600fffff
+[    1.956000] res[1]->start = 0
+[    1.960000] res[1]->end = 0
+[    1.964000] res[2]->start = 0
+[    1.968000] res[2]->end = 0
+[    1.968000] res[3]->start = 0
+[    1.972000] res[3]->end = 0
+[    1.976000] res[4]->start = 0
+[    1.976000] res[4]->end = 0
+[    1.980000] res[5]->start = 0
+[    1.984000] res[5]->end = 0
+[    1.988000] bus=0x2, slot = 0x1, irq=0x18
+[    1.992000] res[0]->start = 60100000
+[    1.996000] res[0]->end = 601fffff
+[    1.996000] res[1]->start = 0
+[    2.000000] res[1]->end = 0
+[    2.004000] res[2]->start = 60200000
+[    2.008000] res[2]->end = 60203fff
+[    2.012000] res[3]->start = 0
+[    2.012000] res[3]->end = 0
+[    2.016000] res[4]->start = 60204000
+[    2.020000] res[4]->end = 60204fff
+[    2.024000] res[5]->start = 0
+[    2.024000] res[5]->end = 0
+[    2.028000] Switching to clocksource Ralink Systick timer
+[    2.036000] NET: Registered protocol family 2
+[    2.040000] Clockevents: could not switch to one-shot mode:
+[    2.040000] Clockevents: could not switch to one-shot mode:
+[    2.040000] Clockevents: could not switch to one-shot mode:
+[    2.040000]  MIPS is not functional.
+[    2.040000]  MIPS is not functional.
+[    2.040000] Clockevents: could not switch to one-shot mode: MIPS is not functional.
+[    2.040000] Could not switch to high resolution mode on CPU 1
+[    2.040000] Could not switch to high resolution mode on CPU 3
+[    2.040000] Could not switch to high resolution mode on CPU 2
+[    2.040000]  MIPS is not functional.
+[    2.092000] Could not switch to high resolution mode on CPU 0
+[    2.100000] TCP established hash table entries: 1024 (order: 1, 8192 bytes)
+[    2.104000] TCP bind hash table entries: 1024 (order: 1, 8192 bytes)
+[    2.112000] TCP: Hash tables configured (established 1024 bind 1024)
+[    2.120000] TCP: reno registered
+[    2.120000] UDP hash table entries: 256 (order: 1, 8192 bytes)
+[    2.128000] UDP-Lite hash table entries: 256 (order: 1, 8192 bytes)
+[    2.132000] NET: Registered protocol family 1
+[    2.228000] 4 CPUs re-calibrate udelay(lpj = 1167360)
+[    2.236000] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    2.244000] fuse init (API version 7.22)
+[    2.248000] msgmni has been set to 242
+[    2.252000] io scheduler noop registered (default)
+[    2.256000] reg_int_mask=0, INT_MASK= 0
+[    2.260000] HSDMA_init
+[    2.264000]
+[    2.264000]  hsdma_phy_tx_ring0 = 0x00c00000, hsdma_tx_ring0 = 0xa0c00000
+[    2.272000]
+[    2.272000]  hsdma_phy_rx_ring0 = 0x00c04000, hsdma_rx_ring0 = 0xa0c04000
+[    2.280000] TX_CTX_IDX0 = 0
+[    2.284000] TX_DTX_IDX0 = 0
+[    2.284000] RX_CRX_IDX0 = 3ff
+[    2.288000] RX_DRX_IDX0 = 0
+[    2.292000] set_fe_HSDMA_glo_cfg
+[    2.296000] HSDMA_GLO_CFG = 465
+[    2.300000] Serial: 8250/16550 driver, 2 ports, IRQ sharing disabled
+[    2.304000] serial8250: ttyS0 at MMIO 0x1e000d00 (irq = 27) is a 16550A
+[    2.312000] serial8250: ttyS1 at MMIO 0x1e000c00 (irq = 26) is a 16550A
+[    2.324000] brd: module loaded
+[    2.328000] flash manufacture id: 1c, device id 70 18
+[    2.332000] EN25QH128A(1c 70181c30) (16384 Kbytes)
+[    2.336000] mtd .name = raspi, .size = 0x01000000 (16M) .erasesize = 0x00010000 (64K) .numeraseregions = 0
+[    2.348000] Creating 6 MTD partitions on "raspi":
+[    2.352000] 0x000000000000-0x000000020000 : "boot"
+[    2.356000] 0x000000020000-0x000000220000 : "kernel"
+[    2.364000] 0x000000220000-0x000000fc0000 : "rootfs"
+[    2.368000] mtd: partition "rootfs" set to be root filesystem
+[    2.376000] 0x000000fc0000-0x000000fd0000 : "romfile"
+[    2.380000] 0x000000fd0000-0x000000fe0000 : "config"
+[    2.384000] 0x000000fe0000-0x000000ff0000 : "radio"
+[    2.392000] Register flash device:flash0
+[    2.396000] DEV flash0: major 200
+[    2.400000] PPP generic driver version 2.4.2
+[    2.404000] PPP MPPE Compression module registered
+[    2.408000] NET: Registered protocol family 24
+[    2.412000] PPTP driver version 0.8.5
+[    2.416000] rdm_major = 253
+[    2.420000] lte_sd_kicking_writeback: set sd_kicking = 0!
+[    2.424000] lte_power_writeback: POWER OFF lte modem!
+[    2.432000] set_led no such led (12)
+[    2.432000] lte_wlan_status_writeback: set lte_wlan_status = 0!
+[    2.440000] Ralink gpio driver initialized
+[    2.444000] set dump mode!
+[    2.448000] OFF!
+[    2.448000] Mirror/redirect action on
+[    2.452000] u32 classifier
+[    2.456000]     input device check on
+[    2.460000]     Actions configured
+[    2.464000] Netfilter messages via NETLINK v0.30.
+[    2.468000] nf_conntrack version 0.5.0 (1938 buckets, 7752 max)
+[    2.472000] gre: GRE over IPv4 demultiplexor driver
+[    2.480000] ip_gre: GRE over IPv4 tunneling driver
+[    2.484000] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    2.488000] Type=Linux
+[    2.492000] TCP: cubic registered
+[    2.496000] NET: Registered protocol family 10
+[    2.500000] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[    2.508000] sit: IPv6 over IPv4 tunneling driver
+[    2.512000] NET: Registered protocol family 17
+[    2.516000] NET: Registered protocol family 15
+[    2.520000] Ebtables v2.0 registered
+[    2.524000] 8021q: 802.1Q VLAN Support v1.8
+[    2.536000] VFS: Mounted root (squashfs filesystem) readonly on device 31:2.
+[    2.548000] devtmpfs: mounted
+[    2.552000] Freeing unused kernel memory: 240K (81524000 - 81560000)
+starting pid 52, tty '': '/etc/init.d/rcS'
+mount: mounting devpts on /dev/pts failed: No such file or directory
+[    3.108000] SCSI subsystem initialized
+insmod: can't insert '/lib/modules/kmdir/kernel/drivers/usb/core/usbcore.ko': No such file or directory
+[    3.180000] Started WatchDog Timer.
+[    3.184000] Ralink APSoC Hardware Watchdog Timer
+mount: mounting usbfs on /proc/bus/usb/ failed: No such device
+[    3.264000] *****run project phy.
+[    3.272000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.284000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.296000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.308000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.320000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.332000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.344000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.356000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.368000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.380000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.408000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.420000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.432000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.444000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.456000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.468000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.480000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.492000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.504000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.516000] FM_OUT value: u4FmOut = 0(0x00000000)
+[    3.640000] xhci-hcd xhci-hcd: xHCI Host Controller
+[    3.644000] xhci-hcd xhci-hcd: new USB bus registered, assigned bus number 1
+[    3.652000] xhci-hcd xhci-hcd: irq 22, io mem 0x1e1c0000
+[    3.660000] hub 1-0:1.0: USB hub found
+[    3.664000] hub 1-0:1.0: 2 ports detected
+[    3.668000] xhci-hcd xhci-hcd: xHCI Host Controller
+[    3.672000] xhci-hcd xhci-hcd: new USB bus registered, assigned bus number 2
+[    3.680000] hub 2-0:1.0: USB hub found
+[    3.684000] hub 2-0:1.0: 1 port detected
+[    3.692000] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    3.704000] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    3.716000] usbcore: registered new interface driver usb-storage
+insmod: can't insert '/lib/modules/kmdir/kernel/drivers/scsi/scsi_wait_scan.ko': No such file or directory
+insmod: can't insert '/lib/modules/kmdir/kernel/drivers/usb/host/ifxusb_host.ko': No such file or directory
+insmod: can't insert '/lib/modules/kmdir/kernel/drivers/net/rt_rdm/rt_rdm.ko': No such file or directory
+[    3.772000] spiflash_ioctl_read, Read from 0x00fcf100 length 0x6, ret 0, retlen 0x6
+[    3.780000] Read MAC from flash(0xFCF100) 40-ffffffed-00-ffffff96-50-69
+[    3.784000] GMAC1_MAC_ADRH -- : 0x000040ed
+[    3.788000] GMAC1_MAC_ADRL -- : 0x00965069
+[    3.792000] Ralink APSoC Ethernet Driver Initilization. v3.1  1024 rx/tx descriptors allocated, mtu = 1500!
+[    3.804000] spiflash_ioctl_read, Read from 0x00fcf100 length 0x6, ret 0, retlen 0x6
+[    3.812000] Read MAC from flash(0xFCF100) 40-ffffffed-00-ffffff96-50-69
+[    3.816000] GMAC1_MAC_ADRH -- : 0x000040ed
+[    3.820000] GMAC1_MAC_ADRL -- : 0x00965069
+[    3.824000] PROC INIT OK!
+[    3.932000] usbcore: registered new interface driver usbserial
+[    3.936000] usbserial: USB Serial support registered for generic
+[    3.944000] usbcore: registered new interface driver usbserial_generic
+[    3.996000] usbcore: registered new interface driver option
+[    4.000000] usbserial: USB Serial support registered for GSM modem (1-port)
+[    4.076000] dns_init
+[    4.076000] domain_name:tplinkmodem.net
+[    4.132000] l2tp_core: L2TP core driver, V2.0
+[    4.144000] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+
+Please press Enter to activate this console. [err] syslogd[main --1001] syslogd : syslogd_init
+
+[ dm_readFile ] 2042:  can not open xml file /var/tmp/pc/reduced_data_model.xml!, about to open file /etc/reduced_data_model.xml
+[    6.556000] spiflash_ioctl_read, Read from 0x00fd0000 length 0x10000, ret 0, retlen 0x10000
+[    6.580000] spiflash_ioctl_read, Read from 0x00fd0000 length 0xa2c0, ret 0, retlen 0xa2c0
+[ dm_loadCfg ] 2504:  currSwRevision = 55aa0102 currSwRevision = 55aa0102
+[    6.628000] spiflash_ioctl_read, Read from 0x00fd0000 length 0x10000, ret 0, retlen 0x10000
+[    6.656000] spiflash_ioctl_read, Read from 0x00fd0000 length 0xa2c0, ret 0, retlen 0xa2c0
+[    7.212000] usbcore: registered new interface driver cdc_ncm
+[    7.248000] spiflash_ioctl_read, Read from 0x00fcf400 length 0x29, ret 0, retlen 0x29
+[    7.256000] spiflash_ioctl_read, Read from 0x00fcf100 length 0x6, ret 0, retlen 0x6
+[    7.264000] spiflash_ioctl_read, Read from 0x00fcf200 length 0x4, ret 0, retlen 0x4
+[    7.272000] spiflash_ioctl_read, Read from 0x00020000 length 0x200, ret 0, retlen 0x200
+[    7.280000] spiflash_ioctl_read, Read from 0x00fcf100 length 0x6, ret 0, retlen 0x6
+/bin/sh: can't create /sys/sfe_cm/cpu_loadavg_drop: nonexistent directory
+/bin/sh: can't create /sys/sfe_cm/random_limit_drop: nonexis[    7.328000] spiflash_ioctl_read, Read from 0x00fcf500 length 0xf, ret 0, retlen 0xf
+tent directory
+7 [src/base/mobile_client.cpp PostEvent](631) ERROR: Post event to MOBILE server failed, errno = 2 (No such file or directory).
+7 [src/comm/client_comm.cpp GetSn](3003) ERROR: Client communication with server failed.
+[err] syslogd[syslogd_msg_process_thread --881] begin to lost!, msg = ERROR: Post event to MOBILE server failed, errno = 2 (No such file or directory).
+
+[ oal_ltedev_getStatus ] 2007:  GetSn from mobile error!!
+7 [src/base/mobile_client.cpp PostEvent](631) ERROR: Post event to MOBILE server failed, errno = 2 (No such file or directory).
+7 [src/comm/client_comm.cpp GetSoftVersion](3053) ERROR: Client communication with server failed.
+[ oal_ltedev_getStatus ] 2025:  GetSoftVersion from mobile error!!
+[ ntpc ] 1004:  Get time zone, g_timeZone = 840
+[ oal_sys_getOldTZInfo ] 845:  Open TZ file error!
+[    7.432000]  8:FFFFFF87:FFFFFF98:6D:18:FFFFFFC0
+[    7.436000] Raeth v3.1 (Tasklet)
+[    7.444000] set CLK_CFG_0 = 0x40a00020!!!!!!!!!!!!!!!!!!1
+[    7.452000] phy_free_head is 0xc0c000!!!
+[    7.456000] phy_free_tail_phy is 0xc0dff0!!!
+[    7.460000] txd_pool=a0c10000 phy_txd_pool=00C10000
+[    7.468000] ei_local->skb_free start address is 0x8708a6cc.
+[    7.472000] free_txd: 00c10010, ei_local->cpu_ptr: 00C10000
+[    7.476000]  POOL  HEAD_PTR | DMA_PTR | CPU_PTR
+[    7.484000] ----------------+---------+--------
+[    7.488000]      0xa0c10000 0x00C10000 0x00C10000
+[    7.492000]
+[    7.492000] phy_qrx_ring = 0x00c0e000, qrx_ring = 0xa0c0e000
+[    7.500000]
+[    7.500000] phy_rx_ring0 = 0x00c18000, rx_ring[0] = 0xa0c18000
+[    7.528000] MT7530 Reset Completed!!
+[    7.540000] change HW-TRAP to 0x17c8f
+[    7.548000]
+[    7.548000] disable Switch Phy
+[    7.552000] GMAC1_MAC_ADRH -- : 0x000040ed
+[    7.556000] GMAC1_MAC_ADRL -- : 0x00965069
+[    7.560000] GDMA2_MAC_ADRH -- : 0x0000000c
+[    7.564000] GDMA2_MAC_ADRL -- : 0x43288051
+[    7.568000] eth1: ===> VirtualIF_open
+[    7.572000] MT7621 GE2 link rate to 1G
+[    7.572000] CDMA_CSG_CFG = 81000000
+[    7.572000] GDMA1_FWD_CFG = 20710000
+[    7.572000] GDMA2_FWD_CFG = 20710000
+/bin/sh: can't create /proc/tplink/eth_vlan: nonexistent directory
+ioctl: No such device
+[    7.672000] IPv6: ADDRCONF(NETDEV_UP): br0: link is not ready
+[ oal_ip6_getIntfAddr ] 715:  Can't find interface: br0
+[ oal_util_setProcLanAddr ] 435:  ip_conntrack module is not loaded, or we did not open the CONFIG_NF_CT_LOCAL_LIMIT_ENTRY
+
+brctl: bridge br0: Invalid argument
+ioctl get error: Inappropriate ioctl for device
+[    7.740000] device eth0.2 entered promiscuous mode
+[    7.744000] device eth0 entered promiscuous mode
+[    7.748000] br0: port 1(eth0.2) entered forwarding state
+[    7.756000] br0: port 1(eth0.2) entered forwarding state
+[    7.760000] IPv6: ADDRCONF(NETDEV_CHANGE): br0: link becomes ready
+ioctl get error: Inappropriate ioctl for device
+[    7.780000] device eth0.3 entered promiscuous mode
+[    7.788000] br0: port 2(eth0.3) entered forwarding state
+[    7.792000] br0: port 2(eth0.3) entered forwarding state
+ioctl get error: Inappropriate ioctl for device
+[    7.812000] device eth0.4 entered promiscuous mode
+[    7.816000] br0: port 3(eth0.4) entered forwarding state
+[    7.824000] br0: port 3(eth0.4) entered forwarding state
+ioctl get error: Inappropriate ioctl for device
+[    7.844000] device eth0.5 entered promiscuous mode
+[    7.848000] br0: port 4(eth0.5) entered forwarding state
+[    7.852000] br0: port 4(eth0.5) entered forwarding state
+[ vlan_addLanPortsIntoBridge ] 550:  add lan Port 255 from br0
+brctl: bridge br0: Device or resource busy
+brctl: bridge br0: Device or resource busy
+brctl: bridge br0: Device or resource busy
+brctl: bridge br0: Device or resource busy
+[ rsl_initVlanObj ] 993:
++++++++++++++rsl_initVlanObj done!
+[ print_vlan_info ] 456:   0 00000002 00000000    1    0 00000042
+[ print_vlan_info ] 456:   1 00000003 00000000    1    0 00000044
+[ print_vlan_info ] 456:   2 00000004 00000000    1    0 00000048
+[ print_vlan_info ] 456:   3 00000005 00000000    1    0 00000050
+[ print_vlan_info ] 456:   4 00000000 2b2b2b2b   43 1852399468 6c567469
+[ print_vlan_info ] 456:   5 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   6 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   7 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   8 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   9 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  10 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  11 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  12 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  13 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  14 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  15 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   0 00000002 00000000    1    0 000000de
+[ print_vlan_info ] 456:   1 00000003 00000000    1    0 00000000
+[ print_vlan_info ] 456:   2 00000004 00000000    1    0 00000000
+[ print_vlan_info ] 456:   3 00000005 00000000    1    0 00000000
+[ print_vlan_info ] 456:   4 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   5 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   6 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   7 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   8 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:   9 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  10 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  11 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  12 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  13 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  14 00000000 00000000    0    0 00000000
+[ print_vlan_info ] 456:  15 00000000 00000000    0    0 00000000
+[    8.616000] MT7603E-->register rlt_drv
+[    8.620000] MT7603E-->
+
+=== pAd = c0f81000, size = 792768 ===
+
+[    8.628000] MT7603E-->EXTRA_TX_RING: AllocVa=a0c1f000 AllocPa=c1f000 total 128 bytes allocated
+[    8.636000] <-- RTMPAllocTxRxRingMemory, Status=0, ErrorValue=0x
+[    8.644000] <-- RTMPAllocAdapterBlock, Status=0
+[    8.648000] MT7603E-->pAd->CSRBaseAddress =0xc0e80000, csr_addr=0xc0e80000!
+[    8.656000] MT7603E-->device_id =0x7603
+[    8.660000] MT7603E-->RtmpChipOpsHook(474): Not support for HIF_MT yet!
+[    8.664000] MT7603E-->mt7603_init()-->
+[    8.668000] MT7603E-->mt_bcn_buf_init(224): Not support for HIF_MT yet!
+[    8.676000] MT7603E--><--mt7603_init()
+1538352008 [src/base/mobile_client.cpp PostEvent](631) ERROR: Post event to MOBILE server failed, errno = 2 (No [    8.692000] MT7603E-->such file or dirTX_BCN DESC a0c42000 size = 320
+ectory).
+153835[    8.700000] MT7603E-->2008 [src/comm/cRX[0] DESC a0c44000 size = 2048
+lient_comm.cpp G[    8.708000] MT7603E-->etSn](3003) ERRORX[1] DESC a0c45000 size = 2048
+R: Client commun[    8.716000] MT7603E-->ication with serEXTRA_TX_RING_6: phy_addr=0xc1f000, Cnt=1!
+ver failed.
+[ o[    8.724000] MT7603E-->al_ltedev_getStaEXTRA_TX_RING_9: phy_addr=0xc1f010, Cnt=1!
+tus ] 2007:  Get[    8.732000] MT7603E-->Sn from mobile eEXTRA_TX_RING_10: phy_addr=0xc1f020, Cnt=1!
+rror!!
+15383520[    8.740000] MT7603E-->08 [src/base/mobEXTRA_TX_RING_11: phy_addr=0xc1f030, Cnt=1!
+ile_client.cpp P[    8.752000] MT7603E-->ostEvent](631) EEXTRA_TX_RING_12: phy_addr=0xc1f040, Cnt=1!
+RROR: Post event[    8.760000] MT7603E--> to MOBILE serveEXTRA_TX_RING_13: phy_addr=0xc1f050, Cnt=1!
+r failed, errno [    8.768000] MT7603E-->= 2 (No such filEXTRA_TX_RING_14: phy_addr=0xc1f060, Cnt=1!
+e or directory).[    8.776000] MT7603E-->
+1538352008 [srEXTRA_TX_RING_15: phy_addr=0xc1f070, Cnt=1!
+c/comm/client_comm.cpp GetSoftVersion](3053) ERR[    8.788000] MT7603E-->OR: Client commuE2pAccessMode=2
+nication with se[    8.796000] MT7603E-->rver failed.
+[ cfg_mode=9
+oal_ltedev_getSt[    8.800000] MT7603E-->atus ] 2025:  Gecfg_mode=9
+tSoftVersion fro[    8.808000] MT7603E-->m mobile error!!wmode_band_equal(): Band Equal!
+
+[ oal_wlan_ra_lteCoexistence ][    8.816000] MT7603E--> 7818:  AutoChanAPSDCapable[0]=1
+nelSkipList :
+[    8.824000] MT7603E-->[ oal_wlan_ra_ltAPSDCapable[1]=1
+eCoexistence ] 7[    8.828000] MT7603E-->855:
+AutoChanAPSDCapable[2]=1
+nelSkipList = 12[    8.836000] MT7603E-->;13
+
+APSDCapable[3]=1
+[    8.840000] MT7603E-->APSDCapable[4]=1
+[    8.844000] MT7603E-->APSDCapable[5]=1
+[    8.848000] MT7603E-->APSDCapable[6]=1
+[    8.852000] MT7603E-->APSDCapable[7]=1
+[    8.856000] MT7603E-->APSDCapable[8]=1
+[    8.860000] MT7603E-->APSDCapable[9]=1
+[    8.864000] MT7603E-->APSDCapable[10]=1
+[    8.868000] MT7603E-->APSDCapable[11]=1
+[    8.872000] MT7603E-->APSDCapable[12]=1
+[    8.876000] MT7603E-->APSDCapable[13]=1
+[    8.880000] MT7603E-->APSDCapable[14]=1
+[    8.884000] MT7603E-->APSDCapable[15]=1
+[    9.272000] MT7603E-->ApMWDS=4
+[    9.272000] MT7603E-->ApMWDS=4
+[    9.276000] MT7603E-->ApMWDS=4
+[    9.296000] MT7603E-->FW Version:CL173766_R
+[    9.300000] MT7603E-->FW Build Date:20171110105932
+[    9.304000] MT7603E-->CmdAddressLenReq:(ret = 0)
+[    9.308000] MT7603E-->CmdFwStartReq: override = 1, address = 1048576
+[    9.316000] MT7603E-->CmdStartDLRsp: WiFI FW Download Success
+[    9.336000] MT7603E-->AsicDMASchedulerInit(): DMA Scheduler Mode=0(LMAC)
+[    9.340000] efuse_probe: efuse = 10000002
+[    9.344000] MT7603E-->RtmpChipOpsEepromHook::e2p_type=2, inf_Type=5
+[    9.352000] MT7603E-->RtmpEepromGetDefault::e2p_dafault=1
+[    9.356000] MT7603E-->RtmpChipOpsEepromHook: E2P type(2), E2pAccessMode = 2, E2P default = 1
+[    9.364000] MT7603E-->NVM is FLASH mode, flash_offset = 0xff0000
+[    9.372000] MT7603E-->1. Phy Mode = 14
+[    9.376000] MT7603E-->
+####  read 2.4G cal from flash !! ####
+[    9.412000] spiflash_ioctl_read, Read from 0x00ff0000 length 0x10000, ret 0, retlen 0x10000
+[    9.420000] read radio success, offset 0xff0000, size 0x200
+[    9.424000] MT7603E-->@@@  NICReadEEPROMParameters : pAd->FWLoad=0
+[    9.596000] MT7603E-->Country Region from e2p = ffff
+[    9.600000] tssi_1_target_pwr_g_band = 32
+[    9.604000] MT7603E-->2. Phy Mode = 14
+[    9.608000] MT7603E-->3. Phy Mode = 14
+[    9.612000] MT7603E-->NICInitPwrPinCfg(14): Not support for HIF_MT yet!
+[    9.620000] MT7603E-->NICInitializeAsic(584): Not support rtmp_mac_sys_reset () for HIF_MT yet!
+[    9.628000] MT7603E-->mt_mac_init()-->
+[    9.632000] MT7603E-->mt7603_init_mac_cr()-->
+[    9.636000] MT7603E-->AsicSetMacMaxLen(1893): Set the Max RxPktLen=1024!
+[    9.644000] MT7603E--><--mt_mac_init()
+[    9.648000] MT7603E-->       WTBL Segment 1 info:
+[    9.652000] MT7603E-->               MemBaseAddr/FID:0x28000/0
+[    9.656000] MT7603E-->               EntrySize/Cnt:32/128
+[    9.660000] MT7603E-->       WTBL Segment 2 info:
+[    9.664000] MT7603E-->               MemBaseAddr/FID:0x40000/0
+[    9.668000] MT7603E-->               EntrySize/Cnt:64/128
+[    9.672000] MT7603E-->       WTBL Segment 3 info:
+[    9.676000] MT7603E-->               MemBaseAddr/FID:0x42000/64
+[    9.680000] MT7603E-->               EntrySize/Cnt:64/128
+[    9.684000] MT7603E-->       WTBL Segment 4 info:
+[    9.688000] MT7603E-->               MemBaseAddr/FID:0x44000/128
+[    9.696000] MT7603E-->               EntrySize/Cnt:32/128
+[    9.700000] MT7603E-->MtAsicACQueue: Write CR:21510, Value=10421
+[    9.704000] MT7603E-->MtAsicACQueue: Write CR:21500, Value=10421
+[    9.712000] MT7603E-->AntCfgInit(2677): Not support for HIF_MT yet!
+[    9.716000] MT7603E-->MCS Set = ff ff 00 00 01
+[   18.100000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   18.408000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   18.712000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   19.024000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   19.336000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   19.644000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   19.960000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   20.272000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   20.576000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   20.884000] MT7603E-->SYNC - BBP R4 to 20MHz.l
+[   21.192000] MT7603E-->rollback the bandwidth setting to support 20/40Mhz
+[   21.196000] mtk_band_steering_netlink_init 244 band steering netlink init ok
+[   21.204000] mtk_band_steering_netlink_init 244 band steering netlink init ok
+[   21.212000] mtk_band_steering_netlink_init 244 band steering netlink init ok
+[   21.220000] MT7603E-->AsicSetRalinkBurstMode(4306): Not support for HIF_MT yet!
+[   21.224000] MT7603E-->RTMPSetPiggyBack(929): Not support for HIF_MT yet!
+[   21.256000] MT7603E-->AsicSetTxPreamble(4293): Not support for HIF_MT yet!
+[   21.268000] MT7603E-->AsicAddSharedKeyEntry(2059): Not support for HIF_MT yet!
+[   21.276000] MT7603E-->AsicAddSharedKeyEntry(2059): Not support for HIF_MT yet!
+[   21.288000] MT7603E-->AsicAddSharedKeyEntry(2059): Not support for HIF_MT yet!
+[   21.292000] MT7603E-->The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
+[   21.300000] MT7603E-->AsicSetPreTbtt(): bss_idx=0, PreTBTT timeout = 0xa0
+[   21.308000] MT7603E-->Main bssid = 40:ed:00:96:50:69
+[   21.312000] <==== rt28xx_init, Status=0
+[   21.320000] MT7603E-->@@@ ed_monitor_init : ===>
+[   21.324000] MT7603E-->@@@ ed_monitor_init : <===
+[   21.328000] MT7603E-->mt7603_set_ed_cca: TURN ON EDCCA mac 0x10618 = 0xd7c87d0f, EDCCA_Status=1
+[   21.336000] MT7603E-->WiFi Startup Cost (ra0): 12.644s
+[   21.348000] MT7603E-->The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
+[   21.360000] ##### mbss_cr_enable, BssId = 1
+[   21.372000] MT7603E-->The 4-BSSID mode is enabled, the BSSID byte5 MUST be the multiple of 4
+[   21.380000] ##### mbss_cr_enable, BssId = 2
+[   21.484000] MT7603E-->Set_ed_chk_proc()::ed_chk=0
+[   21.488000] MT7603E-->mt7603_set_ed_cca: TURN OFF EDCCA  mac 0x10618 = 0x8564267c, EDCCA_Status=0
+[   21.508000] device ra0 entered promiscuous mode
+[   21.512000] br0: port 5(ra0) entered forwarding state
+[   21.516000] br0: port 5(ra0) entered forwarding state
+[   21.528000] device ra2 entered promiscuous mode
+[   21.532000] br0: port 6(ra2) entered forwarding state
+[   21.540000] br0: port 6(ra2) entered forwarding state
+[   21.552000] device ra1 entered promiscuous mode
+[   21.556000] br0: port 7(ra1) entered forwarding state
+[   21.560000] br0: port 7(ra1) entered forwarding state
+Checking 2.4G ca[   21.568000] spiflash_ioctl_read, Read from 0x00ff0000 length 0x2, ret 0, retlen 0x2
+l data...
+/bin/sh: wscd: not found
+Sorry, rule does not exist.
+Sorry, rule does not exist.
+Sorry, rule does not exist.
+Sorry, rule does not exist.
+[   21.796000] MT7603E-->Set::OID_AP_VENDOR_IE_SET
+[   21.800000] MT7603E-->Set::OID_AP_VENDOR_IE_SET
+[   22.788000] usb 1-2: new high-speed USB device number 2 using xhci-hcd
+[   22.824000] add_ep parameters, dev_speed 3, is_in 1, isTT 0, ep_type 3, maxp 16, interval 256, burst 0, mult 0, ep 0x872c0900, ep_ctx 0xa0c470c0, sch_ep 0x866b2200
+[   22.840000] add_ep parameters, dev_speed 3, is_in 1, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0a80, ep_ctx 0xa0c47100, sch_ep 0x878bae80
+[   22.852000] add_ep parameters, dev_speed 3, is_in 0, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0aac, ep_ctx 0xa0c470a0, sch_ep 0x878bac00
+[   22.868000] add_ep parameters, dev_speed 3, is_in 1, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0980, ep_ctx 0xa0c47140, sch_ep 0x878baa00
+[   22.884000] add_ep parameters, dev_speed 3, is_in 0, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c09ac, ep_ctx 0xa0c470e0, sch_ep 0x878ba780
+[   22.896000] add_ep parameters, dev_speed 3, is_in 1, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0c00, ep_ctx 0xa0c47180, sch_ep 0x878ba500
+[   22.912000] add_ep parameters, dev_speed 3, is_in 0, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0c2c, ep_ctx 0xa0c47120, sch_ep 0x878ba300
+[   22.928000] add_ep parameters, dev_speed 3, is_in 1, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0b00, ep_ctx 0xa0c471c0, sch_ep 0x873ebf80
+[   22.940000] add_ep parameters, dev_speed 3, is_in 0, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0b2c, ep_ctx 0xa0c47160, sch_ep 0x873ebd00
+[   22.956000] add_ep parameters, dev_speed 3, is_in 1, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0d80, ep_ctx 0xa0c47200, sch_ep 0x873ebb00
+[   22.972000] add_ep parameters, dev_speed 3, is_in 0, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0dac, ep_ctx 0xa0c471a0, sch_ep 0x873eb880
+[   22.988000] add_ep parameters, dev_speed 3, is_in 1, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c0800, ep_ctx 0xa0c47080, sch_ep 0x879a8c80
+[   23.000000] add_ep parameters, dev_speed 3, is_in 0, isTT 0, ep_type 2, maxp 512, interval 1, burst 0, mult 0, ep 0x872c082c, ep_ctx 0xa0c47060, sch_ep 0x879a8a80
+[   23.016000] usb 1-2: MAC-Address: aa:dd:1e:a2:74:24
+[   23.020000]
+[   23.020000] LTE has rebooted, tell cos to restart qmuxd and mobile
+[   23.028000] cdc_ncm 1-2:1.0 wwan0: register 'cdc_ncm' at usb-xhci-hcd-2, CDC NCM, aa:dd:1e:a2:74:24
+[ lteReconnectCh[   23.040000] option 1-2:1.2: GSM modem (1-port) converter detected
+angedHandler ] 1[   23.048000] usb 1-2: GSM modem (1-port) converter now attached to ttyUSB0
+577:  receive qm[   23.056000] option 1-2:1.3: GSM modem (1-port) converter detected
+i/rndis connect [   23.064000] usb 1-2: GSM modem (1-port) converter now attached to ttyUSB1
+msg!
+
+[   23.072000] option 1-2:1.4: GSM modem (1-port) converter detected
+fuser: can't sta[   23.080000] usb 1-2: GSM modem (1-port) converter now attached to ttyUSB2
+t '/tmp/udisk': No such file or [   23.088000] option 1-2:1.5: GSM modem (1-port) converter detected
+directory
+[   23.096000] usb 1-2: GSM modem (1-port) converter now attached to ttyUSB3
+[   23.104000] usb-storage 1-2:1.6: USB Mass Storage device detected
+[   23.108000] scsi0 : usb-storage 1-2:1.6
+[   23.156000] init mt7613 proc.
+[   23.160000] register mt_drv
+[   23.168000]
+[   23.168000]
+[   23.168000] === pAd = c1a81000, size = 2275136 ===
+[   23.168000]
+[   23.180000] <-- RTMPAllocAdapterBlock, Status=0
+[   23.184000] get_wdev_by_idx: invalid idx(0)
+[   23.188000] pAd->PciHif.CSRBaseAddress =0xc1980000, csr_addr=0xc1980000!
+[   23.196000] get_wdev_by_idx: invalid idx(0)
+[   23.200000] RTMPInitPCIeDevice():device_id=0x7663
+[   23.204000] mt_pci_chip_cfg(): HWVer=0x8a10, FWVer=0x8a01, pAd->ChipID=0x7663
+[   23.212000] mt7663_init()-->
+[   23.212000] <--mt7663_init()
+[   23.216000] <-- RTMPAllocTxRxRingMemory, Status=0
+[   23.224000] get_wdev_by_idx: invalid idx(0)
+[   23.228000] get_wdev_by_idx: invalid idx(0)
+[   23.260000] get_wdev_by_idx: invalid idx(0)
+[   23.264000] get_wdev_by_idx: invalid idx(0)
+[   23.268000] get_wdev_by_idx: invalid idx(0)
+[   23.272000] get_wdev_by_idx: invalid idx(0)
+[   23.276000] get_wdev_by_idx: invalid idx(0)
+[   23.292000] rai0: ===> main_virtual_if_open
+[   23.296000] get_wdev_by_idx: invalid idx(0)
+[   23.300000] get_wdev_by_idx: invalid idx(0)
+[   23.304000] get_wdev_by_idx: invalid idx(0)
+[   23.308000] get_wdev_by_idx: invalid idx(0)
+[   23.312000] load l1profile succeed!
+[   23.316000] get_wdev_by_idx: invalid idx(0)
+[   23.320000] get_wdev_by_idx: invalid idx(0)
+[   23.324000] driver_own()::Try to Clear FW Own...
+fuser: can't stat '/tmp/udisk': No such file or directory
+[   24.112000] scsi 0:0:0:0: Direct-Access     Linux    File-Stor Gadget 0404 PQ: 0 ANSI: 2
+umount: can't forcibly umount /t[   24.120000] sd 0:0:0:0: [sda] 61440 512-byte logical blocks: (31.4 MB/30.0 MiB)
+mp/udisk: No suc[   24.128000] sd 0:0:0:0: [sda] Write Protect is off
+h file or direct[   24.136000] sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+ory
+[   24.148000]  sda:
+[   24.164000] sd 0:0:0:0: [sda] Attached SCSI removable disk
+[ lteReconnectChangedHandler ] 1583:  mount /tmp/udisk
+[ checkUdiskReady ] 878:  [cos] times:0, mount cmd:mount -t auto -o ro /dev/sda /tmp/udisk
+
+[   25.140000] FAT-fs (sda): utf8 is not a recommended IO charset for FAT filesystems, filesystem will be case sensitive!
+mount: mounting /dev/sdb on /tmp/udisk failed: No such file or directory
+mount: mounting /dev/sdc on /tmp/udisk failed: No such file or directory
+[   26.356000] driver_own()::Success to clear FW Own
+[   26.364000] RtmpOSFileOpen(): Error 2 opening /etc/Wireless/iNIC/iNIC_ap_2G.dat
+[   26.372000] Open file "/etc/Wireless/iNIC/iNIC_ap_2G.dat" failed!
+[   26.380000] E2pAccessMode=2
+[   26.384000] SSID[0]=theRocinante, EdcaIdx=0
+[   26.388000] SSID[1]=TP-Link_Guest_5069_5G, EdcaIdx=0
+[   26.392000] SSID[2]=fe4e982d705bec38ab28c11be02d3a, EdcaIdx=0
+[   26.400000] cfg_mode=14
+[   26.400000] cfg_mode=14
+[   26.404000] wmode_band_equal(): Band Equal!
+[   26.408000] MT7613->wifi call wnm read paramters file
+[   26.412000] [TxPower] BAND0: 20
+[   26.416000] [SKUenable] BAND0: 1
+[   26.420000] [PERCENTAGEenable] BAND0: 1
+[   26.424000] [BFBACKOFFenable] BAND0: 0
+[   26.428000] profile: FragThreshold[0]=2346
+[   26.432000] APEdca0
+[   26.436000] APEdca1
+[   26.436000] APEdca2
+[   26.440000] APEdca3
+[   26.444000] APSDCapable[0]=1
+* daemon not run[   26.448000] APSDCapable[1]=1
+ning. starting i[   26.452000] APSDCapable[2]=1
+t now on port 50[   26.456000] APSDCapable[3]=1
+37 *
+[ scanning[   26.460000] APSDCapable[4]=1
+ /proc/bus/usb//[   26.464000] APSDCapable[5]=1
+002 ]
+* daemon [   26.468000] APSDCapable[6]=1
+started successf[   26.472000] APSDCapable[7]=1
+ully *
+[ scanni[   26.476000] APSDCapable[8]=1
+ng /proc/bus/usb[   26.480000] APSDCapable[9]=1
+//002/001 ]
+[   26.484000] APSDCapable[10]=1
+[   26.488000] APSDCapable[11]=1
+[   26.492000] APSDCapable[12]=1
+[   26.496000] APSDCapable[13]=1
+[   26.500000] APSDCapable[14]=1
+[   26.500000] APSDCapable[15]=1
+[   26.504000] read_itxbf: ITxBfEn = 1
+[   26.508000] read_itxbf: BSSID[0]
+[   26.512000] read_itxbf: MBSS[0] ITxBfEn = 1
+[   26.516000] read_itxbf: More BSSID[1]
+[   26.520000] read_itxbf: More MBSS[1] ITxBfEn = 1
+[   26.524000] read_itxbf: More BSSID[2]
+[   26.528000] read_itxbf: More MBSS[2] ITxBfEn = 1
+[   26.532000] read_itxbf: Common.ITxBfEn = 1
+[   26.536000] read_etxbf: ETxBfEnCond = 1
+[   26.540000] read_etxbf: BSSID[0]
+[   26.544000] read_etxbf: MBSS[0] ETxBfEnCond = 1
+[   26.548000] read_etxbf: More BSSID[1]
+[   26.552000] read_etxbf: More MBSS[1] ETxBfEnCond = 1
+[   26.556000] read_etxbf: More BSSID[2]
+[   26.560000] read_etxbf: More MBSS[2] ETxBfEnCond = 1
+[   26.576000] MapEnable=1
+[   26.576000] MAP_Turnkey=0
+[   26.584000] AndesSendCmdMsg: Could not send in band command due to diablefRTMP_ADAPTER_MCU_SEND_IN_BAND_CMD
+[   26.592000] AndesSendCmdMsg: Command type = ed, Extension command type = 80
+[   26.604000] HT: WDEV[0] Ext Channel = BELOW
+[   26.620000] WtcSetMaxStaNum: MaxStaNum:133, BssidNum:3, WdsNum:0, ApcliNum:0, MaxNumChipRept:0, MSTANum:0, MaxUcastEntryNum:133, MinMcastWcid:133
+[   26.632000] Top Init Done!
+[   26.636000] Use alloc_skb
+[   26.640000] RX[0] DESC a0c63000 size = 2048
+[   26.644000] RX[1] DESC a0c64000 size = 2048
+[   26.648000] cut_through_init(): ct sw token number = 2047
+[   26.652000] Hif Init Done!
+[   26.656000] ctl->txq = c1cab780
+[   26.660000] ctl->rxq = c1cab78c
+[   26.664000] ctl->ackq = c1cab798
+[   26.664000] ctl->kickq = c1cab7a4
+[   26.668000] ctl->tx_doneq = c1cab7b0
+[   26.672000] ctl->rx_doneq = c1cab7bc
+[   26.676000] mt7663_fw_prepare():using E2 ROM patch
+[   26.680000] mt7663_fw_prepare():using E2 firmware
+[   26.684000] Parsing patch header
+[   26.688000]  Built date: 1911131412ecf4d
+[   26.692000]
+[   26.696000]  Platform: 7663
+[   26.696000]  HW/SW version: 0x6d702d31
+[   26.700000]  Patch version: 0x3830328a
+[   26.704000]  Target address: 0xdc000, length: 203984
+[   26.708000] patch is not ready && get semaphore success
+[   26.716000] EventGenericEventHandler: CMD Success
+[   26.720000] MtCmdAddressLenReq:(ret = 0)
+[   26.728000] MtCmdPatchFinishReq
+[   26.732000] EventGenericEventHandler: CMD Success
+[   26.736000] release patch semaphore
+[   26.740000] Parsing CPU 0 fw tailer
+[   26.744000]  Chip ID: 0x08
+[   26.744000]  Eco version: 0x01
+[   26.748000]  Region number: 0x03
+[   26.752000]  Format version: 0x02
+[   26.756000]  Format flag: 0x01
+[   26.756000]  Ram version: 7663mp1827
+[   26.760000]  Built date: 20191113141412
+[   26.764000]  Common crc: 0xe65fcd05
+[   26.768000] Parsing tailer region 0
+[   26.772000]  Decomp crc: 0x0
+[   26.776000]  Decomp size: 0x0
+[   26.780000]  Decomp block size: 0x0
+[   26.780000]  Target address: 0x112c00
+[   26.784000]  Download size: 276352
+[   26.788000]  Feature set: 0x27
+[   26.792000] Parsing tailer region 1
+[   26.796000]  Decomp crc: 0x0
+[   26.800000]  Decomp size: 0x0
+[   26.800000]  Decomp block size: 0x0
+[   26.804000]  Target address: 0x2018400
+[   26.808000]  Download size: 70656
+[   26.812000]  Feature set: 0x07
+[   26.816000] Parsing tailer region 2
+[   26.820000]  Decomp crc: 0x0
+[   26.820000]  Decomp size: 0x0
+[   26.824000]  Decomp block size: 0x0
+[   26.828000]  Target address: 0x40100000
+[   26.832000]  Download size: 14720
+[   26.836000]  Feature set: 0x07
+[   26.836000]  Release info: header tag = 0, total length = 0
+[   26.844000] EventGenericEventHandler: CMD Success
+[   26.848000] MtCmdAddressLenReq:(ret = 0)
+[   26.860000] EventGenericEventHandler: CMD Success
+[   26.864000] MtCmdAddressLenReq:(ret = 0)
+[   26.868000] EventGenericEventHandler: CMD Success
+[   26.872000] MtCmdAddressLenReq:(ret = 0)
+[   26.876000] MtCmdFwStartReq: override = 0x1, address = 0x112c00
+[   26.924000] EventGenericEventHandler: CMD Success
+[   26.932000] MCU Init Done!
+[   26.932000] efuse_probe: efuse = 511161
+[   26.936000] RtmpChipOpsEepromHook::e2p_type=2, inf_Type=5
+[   26.944000] RtmpEepromGetDefault::e2p_dafault=1
+[   26.948000] RtmpChipOpsEepromHook: E2P type(2), E2pAccessMode = 2, E2P default = 1
+[   26.956000] NVM is FLASH mode. dev_idx [1] FLASH OFFSET [0xFF8000]
+[   26.960000]
+[   26.960000] ####  read 5G cal from flash !! ####
+[   26.996000] spiflash_ioctl_read, Read from 0x00ff0000 length 0x10000, ret 0, retlen 0x10000
+[   27.004000] validFlashEepromID(): eeFlashId=7663, pAd->ChipID=7663
+[   28.608000] Country Region from e2p = 0
+[   28.612000] mt7663_antenna_default_reset() todo
+[   28.616000] RTMPReadTxPwrPerRate(444): Don't Support this now!
+[   28.620000] RcRadioInit(): DbdcMode=0, ConcurrentBand=1
+[   28.624000] RcRadioInit(): pRadioCtrl=855eedb8,Band=0,rfcap=3,channel=1,PhyMode=2 extCha=0xf
+[   28.636000] AntCfgInit(2929): Not support for HIF_MT yet!
+[   28.640000] MtReadPwrLimitTable: RF_LOCKDOWN Feature OFF !!!
+[   28.648000] MtReadPwrLimitTable: RF_LOCKDOWN Feature OFF !!!
+[   28.656000] EEPROM Init Done!
+[   28.656000] mt_mac_init()-->
+[   28.660000] mt_mac_pse_init(2968): Don't Support this now!
+[   28.668000] mt7663_init_mac_cr()-->
+[   28.668000] mt7663_init_mac_cr(): TMAC_TRCR0=0x82783c92
+[   28.676000] MtAsicSetMacMaxLen(1073): Not support for HIF_MT yet!
+[   28.680000] <--mt_mac_init()
+[   28.696000] MAC Init Done!
+[   28.700000] MT7663BBPInit():BBP Initialization.....
+[   28.704000]  Band 0: valid=1, isDBDC=0, Band=2, CBW=1, CentCh/PrimCh=1/1, prim_ch_idx=0, txStream=2
+[   28.712000]  Band 1: valid=0, isDBDC=0, Band=0, CBW=0, CentCh/PrimCh=0/0, prim_ch_idx=0, txStream=0
+[   28.720000] MT7663BBPInit() todo
+[   28.724000] PHY Init Done!
+[   28.728000] RtmpOSFileOpen(): Error 2 opening /etc/Wireless/iNIC/iNIC_ap_2G.dat
+[   28.736000] Open file "/etc/Wireless/iNIC/iNIC_ap_2G.dat" failed!
+[   28.740000] E2pAccessMode=2
+[   28.744000] SSID[0]=theRocinante, EdcaIdx=0
+[   28.748000] SSID[1]=TP-Link_Guest_5069_5G, EdcaIdx=0
+[   28.756000] SSID[2]=fe4e982d705bec38ab28c11be02d3a, EdcaIdx=0
+[   28.760000] cfg_mode=14
+[   28.764000] cfg_mode=14
+[   28.764000] wmode_band_equal(): Band Equal!
+[   28.768000] MT7613->wifi call wnm read paramters file
+[   28.776000] [TxPower] BAND0: 20
+[   28.780000] [SKUenable] BAND0: 1
+[   28.780000] [PERCENTAGEenable] BAND0: 1
+[   28.788000] [BFBACKOFFenable] BAND0: 0
+[   28.792000] profile: FragThreshold[0]=2346
+[   28.796000] APEdca0
+[   28.796000] APEdca1
+[   28.800000] APEdca2
+[   28.800000] APEdca3
+[   28.808000] APSDCapable[0]=1
+[   28.808000] APSDCapable[1]=1
+[   28.812000] APSDCapable[2]=1
+[   28.816000] APSDCapable[3]=1
+[   28.816000] APSDCapable[4]=1
+[   28.820000] APSDCapable[5]=1
+[   28.824000] APSDCapable[6]=1
+[   28.828000] APSDCapable[7]=1
+[   28.828000] APSDCapable[8]=1
+[   28.832000] APSDCapable[9]=1
+[   28.836000] APSDCapable[10]=1
+[   28.836000] APSDCapable[11]=1
+[   28.840000] APSDCapable[12]=1
+[   28.844000] APSDCapable[13]=1
+[   28.848000] APSDCapable[14]=1
+[   28.848000] APSDCapable[15]=1
+[   28.852000] read_itxbf: ITxBfEn = 1
+[   28.856000] read_itxbf: BSSID[0]
+[   28.860000] read_itxbf: MBSS[0] ITxBfEn = 1
+[   28.864000] read_itxbf: More BSSID[1]
+[   28.868000] read_itxbf: More MBSS[1] ITxBfEn = 1
+[   28.872000] read_itxbf: More BSSID[2]
+[   28.876000] read_itxbf: More MBSS[2] ITxBfEn = 1
+[   28.880000] read_itxbf: Common.ITxBfEn = 1
+[   28.884000] read_etxbf: ETxBfEnCond = 1
+[   28.888000] read_etxbf: BSSID[0]
+[   28.892000] read_etxbf: MBSS[0] ETxBfEnCond = 1
+[   28.896000] read_etxbf: More BSSID[1]
+[   28.900000] read_etxbf: More MBSS[1] ETxBfEnCond = 1
+[   28.904000] read_etxbf: More BSSID[2]
+[   28.908000] read_etxbf: More MBSS[2] ETxBfEnCond = 1
+[   28.924000] MapEnable=1
+[   28.928000] MAP_Turnkey=0
+[   28.936000] HT: WDEV[0] Ext Channel = BELOW
+[   28.956000] tx_pwr_comp_init():NotSupportYet!
+[   28.960000] MtCmdSetMacTxRx:(ret = 0)
+[   28.964000] asic_bss_beacon_init(): NotSupportedFunc for this arch(HIF_MT)!
+[   28.968000] MtAsicSetChBusyStat(646): Not support for HIF_MT yet!
+[   28.976000] AsicDisableSync(): NotSupportedFunc for this arch(HIF_MT)!
+[   28.984000] MtAsicSetRalinkBurstMode(2219): Not support for HIF_MT yet!
+[   28.988000] MtAsicSetPiggyBack(590): Not support for HIF_MT yet!
+[   28.996000] WifiFwdSet::disabled=0
+[   29.000000] AsicSetPreTbtt(): NotSupportedFunc for this arch(HIF_MT)!
+[   29.004000] Main bssid = 00:00:00:00:00:00
+[   29.008000] AsicSetRxFilter(): NotSupportedFunc for this arch(HIF_MT)!
+[   29.016000] MtCmdSetMacTxRx:(ret = 0)
+[   29.020000] AsicSetRxFilter(): NotSupportedFunc for this arch(HIF_MT)!
+[   29.028000] MtCmdSetMacTxRx:(ret = 0)
+[   29.032000] INIT REDUCE TCP ACK, rai0
+[   29.032000] <==== mt_wifi_init, Status=0
+[   29.036000] TxBfModuleEnCtrl:It's not DBDC mode
+[   29.044000] MtCmdEDCCACtrl: BandIdx: 0, EDCCACtrl: 1
+[   29.048000] WtcSetMaxStaNum: MaxStaNum:133, BssidNum:3, WdsNum:0, ApcliNum:0, MaxNumChipRept:0, MSTANum:0, MaxUcastEntryNum:133, MinMcastWcid:133
+[   29.060000] cp_support_is_enabled: set Driver CP_SUPPORT to Mode 2.
+[   29.068000] RTMP_COM_IoctlHandle -> CMD_RTPRIV_IOCTL_VIRTUAL_INF_UP
+[   29.076000] wifi_sys_open(), wdev idx = 0
+[   29.080000] wdev_attr_update(): wdevId0 = 40:ed:00:96:50:68
+[   29.084000] [RcGetHdevByPhyMode]-- channel 0 fix for rdev fetching
+[   29.092000] [BuildChannelList] BandIdx = 0, PhyMode = 49, ChListNum = 4:
+[   29.096000]  [RadarStateCheck] RD_NORMAL_MODE
+[   29.104000] phy_freq_adjust : no prim_ch value for adjust!
+[   29.108000] Caller: wlan_operate_init+0xf0/0x160 [MT7613_ap]
+[   29.116000]
+[   29.116000] phy_mode=49, ch=0, wdev_type=1
+[   29.120000] ht_cap: ht_cap->HtCapInfo,
+[   29.124000] ldpc=1,ch_width=1,gf=0,sgi20=1,sgi40=1,tx_stbc=0,rx_stbc=0,amsdu_size=0
+[   29.132000] ht_cap: ht_cap->HtCapParm,
+[   29.136000] mdpu_density=5, ampdu_factor=3
+[   29.140000] AP inf up for ra_0(func_idx) OmacIdx=0
+[   29.144000] AsicRadioOnOffCtrl(): DbdcIdx=0 RadioOn
+[   29.152000] ApAutoChannelAtBootUp----------------->
+[   29.156000] ApAutoChannelAtBootUp: AutoChannelBootup[0] = 1
+[   29.160000] AsicSetRxFilter(): NotSupportedFunc for this arch(HIF_MT)!
+[   29.168000] MtCmdSetMacTxRx:(ret = 0)
+[   29.172000] [AutoChSelBuildChannelListFor5G] ChListNum5G = 4
+[   29.176000] AsicSwitchChannel(): 5G Channel:36, then must be Channel_Band:1 !!
+[   29.420000] AsicSwitchChannel(): 5G Channel:40, then must be Channel_Band:1 !!
+error: device not found
+opened the device /dev/ttyUSB0, fd = 9
+[   29.664000] AsicSwitchChannel(): 5G Channel:44, then must be Channel_Band:1 !!
+[   29.904000] AsicSwitchChannel(): 5G Channel:48, then must be Channel_Band:1 !!
+[   30.144000] ====================================================================
+[   30.148000] Channel  36 : Busy Time =    305, Skip Channel = FALSE, BwCap = TRUE
+[   30.156000] Channel  40 : Busy Time =      9, Skip Channel = FALSE, BwCap = TRUE
+[   30.164000] Channel  44 : Busy Time =      7, Skip Channel = FALSE, BwCap = TRUE
+[   30.172000] Channel  48 : Busy Time =      6, Skip Channel = FALSE, BwCap = TRUE
+[   30.180000] ====================================================================
+[   30.188000] Rule 3 Channel Busy time value : Select Primary Channel 48
+[   30.192000] Rule 3 Channel Busy time value : Min Channel Busy = 305
+[   30.200000] Rule 3 Channel Busy time value : BW = 80
+[   30.204000] [SelectClearChannelBusyTime] - band0 END
+[   30.208000] ApAutoChannelAtBootUp : Auto channel selection: Selected channel = 48, IsAband = 1
+[   30.216000]  AutoChSelUpdateChannel(): Update channel for wdev for this band PhyMode = 49, Channel = 48
+[   30.228000] AsicSwitchChannel(): 5G Channel:42, then must be Channel_Band:1 !!
+[   30.272000] ApAutoChannelAtBootUp<-----------------
+[   30.276000] [PMF]APPMFInit:: apidx=0, MFPC=0, MFPR=0, SHA256=0
+[   30.284000] Caller: SetCommonHT+0xd8/0x198 [MT7613_ap]
+[   30.292000]
+[   30.292000] phy_mode=49, ch=48, wdev_type=1
+[   30.296000] ht_cap: ht_cap->HtCapInfo,
+[   30.300000] ldpc=1,ch_width=1,gf=0,sgi20=1,sgi40=1,tx_stbc=0,rx_stbc=0,amsdu_size=0
+[   30.308000] ht_cap: ht_cap->HtCapParm,
+[   30.312000] mdpu_density=5, ampdu_factor=3
+[   30.316000] wifi_sys_linkup(), wdev idx = 0
+[   30.320000] wtc_acquire_groupkey_wcid: Found a non-occupied wtbl_idx:135 for WDEV_TYPE:1
+[   30.320000]  LinkToOmacIdx = 0, LinkToWdevType = 1
+Response data OK, buffer :
+ ATE=0
+OK
+
+[   30.460000] bssUpdateBmcMngRate (BSS_INFO_BROADCAST_INFO), CmdBssInfoBmcRate.u2BcTransmit= 8192, CmdBssInfoBmcRate.u2McTransmit = 8192
+[   30.480000] UpdateBeaconHandler, BCN_UPDATE_INIT, OmacIdx = 0
+[   30.488000] MtCmdTxPowerSKUCtrl: fgTxPowerSKUEn: 1, BandIdx: 0
+[   30.492000] MtCmdTxBfBackoffCtrl: fgTxBFBackoffEn: 0, BandIdx: 0
+[   30.500000] MtCmdTxPowerPercentCtrl: fgTxPowerPercentEn: 1, BandIdx: 0
+[   30.504000] AsicSetTxStream(): NotSupportedFunc for this arch(HIF_MT)!
+[   30.512000] AsicSetRxStream(): NotSupportedFunc for this arch(HIF_MT)!
+[   30.520000] apidx 0 for WscUUIDInit
+[   30.520000] Generate UUID for apidx(0)
+[   30.532000] rai1: ===> mbss_virtual_if_open
+[   30.536000] RTMP_COM_IoctlHandle -> CMD_RTPRIV_IOCTL_VIRTUAL_INF_UP
+[   30.544000] wifi_sys_open(), wdev idx = 1
+[   30.548000] wdev_attr_update(): wdevId1 = 42:ed:00:96:50:68
+[   30.552000]  [RadarStateCheck] RD_NORMAL_MODE
+[   30.560000] Caller: wlan_operate_init+0xf0/0x160 [MT7613_ap]
+[   30.564000]
+[   30.564000] phy_mode=49, ch=48, wdev_type=1
+[   30.572000] ht_cap: ht_cap->HtCapInfo,
+[   30.576000] ldpc=1,ch_width=1,gf=0,sgi20=1,sgi40=1,tx_stbc=1,rx_stbc=1,amsdu_size=0
+[   30.584000] ht_cap: ht_cap->HtCapParm,
+[   30.588000] mdpu_density=0, ampdu_factor=3
+[   30.592000] AP inf up for ra_1(func_idx) OmacIdx=17
+[   30.596000] AsicRadioOnOffCtrl(): DbdcIdx=0 RadioOn
+[   30.600000] ApAutoChannelAtBootUp----------------->
+[   30.608000] ApAutoChannelAtBootUp: AutoChannelBootup[0] = 1
+[   30.612000] AsicSetRxFilter(): NotSupportedFunc for this arch(HIF_MT)!
+[   30.620000] MtCmdSetMacTxRx:(ret = 0)
+[   30.624000] ApAutoChannelAtBootUp<-----------------
+[   30.628000] [PMF]APPMFInit:: apidx=1, MFPC=0, MFPR=0, SHA256=0
+[   30.632000] Caller: SetCommonHT+0xd8/0x198 [MT7613_ap]
+[   30.640000]
+[   30.640000] phy_mode=49, ch=48, wdev_type=1
+[   30.644000] ht_cap: ht_cap->HtCapInfo,
+[   30.648000] ldpc=1,ch_width=1,gf=0,sgi20=1,sgi40=1,tx_stbc=1,rx_stbc=1,amsdu_size=0
+[   30.656000] ht_cap: ht_cap->HtCapParm,
+[   30.660000] mdpu_density=0, ampdu_factor=3
+[   30.664000] wifi_sys_linkup(), wdev idx = 1
+[   30.668000] wtc_acquire_groupkey_wcid: Found a non-occupied wtbl_idx:134 for WDEV_TYPE:1
+[   30.668000]  LinkToOmacIdx = 11, LinkToWdevType = 1
+[   30.808000] bssUpdateBmcMngRate (BSS_INFO_BROADCAST_INFO), CmdBssInfoBmcRate.u2BcTransmit= 8192, CmdBssInfoBmcRate.u2McTransmit = 8192
+[   30.828000] UpdateBeaconHandler, BCN_UPDATE_INIT, OmacIdx = 11
+[   30.836000] MtCmdTxPowerSKUCtrl: fgTxPowerSKUEn: 1, BandIdx: 0
+[   30.840000] MtCmdTxBfBackoffCtrl: fgTxBFBackoffEn: 0, BandIdx: 0
+[   30.848000] MtCmdTxPowerPercentCtrl: fgTxPowerPercentEn: 1, BandIdx: 0
+[   30.852000] AsicSetTxStream(): NotSupportedFunc for this arch(HIF_MT)!
+[   30.860000] AsicSetRxStream(): NotSupportedFunc for this arch(HIF_MT)!
+[   30.868000] apidx 1 for WscUUIDInit
+[   30.868000] Generate UUID for apidx(1)
+[   30.880000] rai2: ===> mbss_virtual_if_open
+[   30.884000] RTMP_COM_IoctlHandle -> CMD_RTPRIV_IOCTL_VIRTUAL_INF_UP
+[   30.892000] wifi_sys_open(), wdev idx = 2
+[   30.896000] wdev_attr_update(): wdevId2 = 42:ed:00:a6:50:68
+[   30.900000]  [RadarStateCheck] RD_NORMAL_MODE
+[   30.908000] Caller: wlan_operate_init+0xf0/0x160 [MT7613_ap]
+[   30.912000]
+[   30.912000] phy_mode=49, ch=48, wdev_type=1
+[   30.920000] ht_cap: ht_cap->HtCapInfo,
+[   30.924000] ldpc=1,ch_width=1,gf=0,sgi20=1,sgi40=1,tx_stbc=1,rx_stbc=1,amsdu_size=0
+[   30.932000] ht_cap: ht_cap->HtCapParm,
+[   30.936000] mdpu_density=0, ampdu_factor=3
+[   30.940000] AP inf up for ra_2(func_idx) OmacIdx=18
+[   30.944000] AsicRadioOnOffCtrl(): DbdcIdx=0 RadioOn
+[   30.948000] ApAutoChannelAtBootUp----------------->
+[   30.956000] ApAutoChannelAtBootUp: AutoChannelBootup[0] = 1
+[   30.960000] AsicSetRxFilter(): NotSupportedFunc for this arch(HIF_MT)!
+[   30.968000] MtCmdSetMacTxRx:(ret = 0)
+[   30.972000] ApAutoChannelAtBootUp<-----------------
+[   30.976000] [PMF]APPMFInit:: apidx=2, MFPC=0, MFPR=0, SHA256=0
+[   30.980000] Caller: SetCommonHT+0xd8/0x198 [MT7613_ap]
+[   30.988000]
+[   30.988000] phy_mode=49, ch=48, wdev_type=1
+[   30.992000] ht_cap: ht_cap->HtCapInfo,
+[   30.996000] ldpc=1,ch_width=1,gf=0,sgi20=1,sgi40=1,tx_stbc=1,rx_stbc=1,amsdu_size=0
+[   31.004000] ht_cap: ht_cap->HtCapParm,
+[   31.008000] mdpu_density=0, ampdu_factor=3
+[   31.012000] wifi_sys_linkup(), wdev idx = 2
+[   31.016000] wtc_acquire_groupkey_wcid: Found a non-occupied wtbl_idx:133 for WDEV_TYPE:1
+[   31.016000]  LinkToOmacIdx = 12, LinkToWdevType = 1
+[   31.160000] bssUpdateBmcMngRate (BSS_INFO_BROADCAST_INFO), CmdBssInfoBmcRate.u2BcTransmit= 8192, CmdBssInfoBmcRate.u2McTransmit = 8192
+[   31.176000] UpdateBeaconHandler, BCN_UPDATE_INIT, OmacIdx = 12
+[   31.184000] MtCmdTxPowerSKUCtrl: fgTxPowerSKUEn: 1, BandIdx: 0
+[   31.188000] MtCmdTxBfBackoffCtrl: fgTxBFBackoffEn: 0, BandIdx: 0
+[   31.196000] MtCmdTxPowerPercentCtrl: fgTxPowerPercentEn: 1, BandIdx: 0
+[   31.200000] AsicSetTxStream(): NotSupportedFunc for this arch(HIF_MT)!
+[   31.208000] AsicSetRxStream(): NotSupportedFunc for this arch(HIF_MT)!
+[   31.216000] apidx 2 for WscUUIDInit
+[   31.220000] Generate UUID for apidx(2)
+[ oal_wlan_ra_setWpsUPnP ] 7073:  rai0: cannot open scpd xml file
+
+[   31.284000] set_thermal_protection_admin_ctrl_duty_proc: ucBand:0, u4Lv0Duty:100, u4Lv1Duty:80, u4Lv2Duty:40, u4Lv3Duty:20
+[   31.304000] set_thermal_protection_criteria_proc: fgHighEn: 1, fgLowEn: 1, fgRFOffEn: 0, cHighTempTh: 120, cLowTempTh: 115, cRFOffTh: 125
+[   31.316000] set_thermal_protection_criteria_proc: u4RechkTimer: 30, ucType: Duty Cycle
+[   31.324000] MtCmdThermalProtect: ucBand:0, HighEn:1, HighTempTh:120, LowEn:1, LowTempTh:115, RechkTimer:30
+[   31.336000] MtCmdThermalProtect: RFOffEn: 0, RFOffTh: 125, ucType: 1
+[ oal_wlan_ra_set_thermal_protect ] 7896:  set 5G thermal protect ok
+[   31.348000] rai1: ===> mbss_virtual_if_close
+[   31.356000] wifi_sys_linkdown(), wdev idx = 1
+[   31.356000] ExtEventBeaconLostHandler::FW LOG, Beacon lost (42:ed:00:96:50:68), Reason 0x10
+[   31.356000]   Beacon lost - AP disabled!!!
+Response data OK, buffer :
+
+[   31.372000] bssUpdateBmcMngRate (BSS_INFO_BROADCAST_INFO), CmdBssInfoBmcRate.u2BcTransmit= 0, CmdBssInfoBmcRate.u2McTransmit = 0
+[   31.384000] wifi_sys_close(), wdev idx = 1
+
+
+OK
+
+[   31.400000] device rai0 entered promiscuous mode
+killall: flowsta[   31.404000] br0: port 8(rai0) entered forwarding state
+t: no process ki[   31.412000] br0: port 8(rai0) entered forwarding state
+lled
+[   31.428000] device rai2 entered promiscuous mode
+[   31.432000] br0: port 9(rai2) entered forwarding state
+[   31.436000] br0: port 9(rai2) entered forwarding state
+killall: mobile: no process killed
+[   31.452000] device rai1 entered promiscuous mode
+Checking 5G cal [   31.456000] spiflash_ioctl_read, Read from 0x00ff0000 length 0x2, ret 0, retlen 0x2
+data...
+killall: qmuxd: no process killed
+[ lteReconnectChangedHandler ] 1632:  disconnect... LTE ip connection.
+
+[ lteReconnectChangedHandler ] 1651:  start mobile
+/bin/sh: wscd_5G: not found
+1538352031 [src/base/mobile_main.cpp main](308) ERROR: updateLTE_ISP_File.
+Archive:  /lib/NetIspInfo.zip
+mmmInit():Total mem size=51364, addr=0x0x59f950.
+*************************************************************
+*************************MMM TABLE DUMP**********************
+-------------------------------------------------------------
+ poolhead(40)  poolnum  dynamictimes  chainhead  poolend
+-------------------------------------------------------------
+ 0x59f950        8          0         (nil)     0x5ac1f4
+-------------------------------------------------------------
+ index  poolhead(20)    size    blocks    free     usage
+-------------------------------------------------------------
+  1     0x59f978        32          256       256       0
+  2     0x5a1d90        64          128       128       0
+  3     0x5a3fa8        128         64        64        0
+  4     0x5a60c0        256         32        32        0
+  5     0x5a8158        512         8         8         0
+  6     0x5a9190        1024        4         4         0
+  7     0x5aa1b8        2048        2         2         0
+  8     0x5ab1d8        4096        1         1         0
+-------------------------------------------------------------
+ index  chainnode(16)   magic    length    prev    next
+-------------------------------------------------------------
+(nil)
+*************************************************************
+  inflating: NetIspInfo.ini
+**************************************************
+********************config dump*******************
+--------------------------------------------------
+sef domain                      : n-deventry-gw.tplinkcloud.com
+sef port                        : 443
+cloud svr default port          : 443
+default svr                     : n-devs-gw.tplinkcloud.com
+default port                    : 443
+default valid time              : 172800
+heartbeat interval              : 235000
+request timeout                 : 5000
+reconnect timewait max          : 1024000
+reconnect cachedsvr max times   : 5
+reconnect defaultsvr max times  : 5
+reconnect random time min       : 2000
+reconnect random time max       : 256000
+short connect interval          : 259200000
+max message number              : 1000
+max client number               : 20
+service file                    : /tmp/cloud_service.cfg
+cer file                        : /etc/cloud/2048_newroot.cer
+ssl verify CN                   :
+ssl verify time                 : 1
+**************************************************
+[ checkLTE_ISP_Version ] 221:  old version 22111001
+[ checkLTE_ISP_Version ] 222:  new version 22111001
+1538352031 [src/sms/sms_raw_table.cpp initRawDatabase](161) ERROR: Init raw table success.
+Query new SMS count success.1538352031 [src/sms/sms.cpp initSmsCount](313) ERROR: New sms count is 1
+1538352031 [src/base/mobile_manager_at.cpp GetAtComDev](250) USER: open /tmp/usbcom, use /dev/ttyUSB0 default
+[ lteReconnectChangedHandler ] 1655:  killall flowstat
+killall: flowstat: no process killed
+[ lteReconnectChangedHandler ] 1657:  start flowstat
+[   32.512000] IPv6: ADDRCONF(NETDEV_UP): wwan0: link is not ready
+[ lteReconnectChangedHandler ] 1662:  start qmuxd and mobile done.
+
+[   32.544000] cdc_ncm: wwan0: 425 mbit/s downlink 425 mbit/s uplink
+[   32.576000] cdc_ncm: wwan0: network connection: disconnected
+[ getPidFromPidFile ] 112:  Cann't open file: /var/run/zebra.pid.
+1538352032 INFO: src/flowstat_main.c(18) main(): LTE flowstat process starts working!
+[   32.608000] cdc_ncm: wwan0: 425 mbit/s downlink 425 mbit/s uplink
+[ getPidFromPidFile ] 112:  Cann't open file: /var/run/ripd.pid.[   32.624000]
+[   32.624000] handle_wwan_hwnat_event: dev(wwan0) 1
+
+ioctl get lte wan flag error: Inappropriate ioctl for device
+[   32.672000] cdc_ncm: wwan0: network connection: connected
+[   32.676000] IPv6: ADDRCONF(NETDEV_CHANGE): wwan0: link becomes ready
+/bin/sh: can't create /proc/sys/kernel/core_pattern: nonexistent directory
+sendto /var/tmp/9 msg 2004 error No such file or directory ,pid 115
+[   33.784000] tun: Universal TUN/TAP device driver, 1.6
+[   33.788000] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+insmod: can't insert '/lib/modules/kmdir/kernel/drivers/net/ppp_mppe.ko': No such file or directory
+iptables: Bad rule (does a matching rule exist in that chain?).
+2018-10-01 03:00:33.519|pid:0|level:0|src/cloud_https.c:131|main | - cloud https client start.
+killall: npd6: no process killed
+radvd starting
+ioctl get error: Inappropriate ioctl for device
+[rsl_initWanLteIntfCfgObj 3615] init LTE module, set flowstat [enableDataLimit 1, enablePaymentDay 1, paymentDay 22, limitation 10737418240, warningPercent 85]
+ioctl get lte wan flag error: Inappropriate ioctl for device
+[initProfileList 430] LTE Module: profile num [2], default profile [1], active profile [0]
+[initProfileList 432] DM: profile num [2], default profile [1], active profile [0]
+********************config dump*******************
+----------------------status----------------------
+processid                     : 600
+---------------------configure--------------------
+loglevel                      : 3
+verify host                   : n-device-api.tplinkcloud.com
+verify port                   : 0
+verify path                   : /v1/validate
+post connect timeout          : 20
+post transfer timeout         : 20
+get connect timeout           : 20
+get transfer timeout          : 20
+session debug                 : off
+cer file                      : /etc/cloud/2048_newroot.cer
+cer type                      :
+**************************************************
+/var/run/dhcp6c_wwan0.pid: No such file or directory
+[ getPidFromPidFile ] 112:  Cann't open file: /var/run/ripd.pid.
+Generating key, this may take a while...
+Generating key, this may take a while...
+1538352034 [src/comm/manager_comm_at.cpp SetModemMode](4669) ERROR: SetModemMode mode=0
+1538352034 [src/comm/manager_comm_at.cpp SetupModemIndication](4720) ERROR: AT+CGDCONT=1
+1538352034 [src/comm/manager_comm_at.cpp SetupModemIndication](4723) ERROR: AT+CFUN=1
+1538352034 [src/comm/manager_comm_at.cpp SetupModemIndication](4726) ERROR: AT+CFUN=1
+1538352034 [src/comm/manager_comm_at.cpp SetupModemIndication](4730) ERROR: AT+DUMPEN=0
+1538352034 [src/comm/manager_comm_at.cpp SetupModemIndication](4734) ERROR: AT+GTLOGEN=0
+1538352034 [src/comm/manager_comm_at.cpp SetupModemIndication](4738) ERROR: SEND AT
+1538352034 [src/comm/manager_comm_at.cpp GetBandSel](5863) ERROR: GetBandSel
+iptables: Bad rule (does a matching rule exist in that chain?).
+iptables: Bad rule (does a matching rule exist in that chain?).
+iptables: Bad rule (does a matching rule exist in that chain?).
+[   34.700000] nf_conntrack_rtsp v0.6.21 loading
+[   34.716000] nf_nat_rtsp v0.6.21 loading
+[   34.732000] Ralink HW NAT Module Enabled
+[   34.740000] eth0 ifindex =8
+[   34.744000] eth1 ifindex =9
+[   34.760000] Device Instance
+[   34.764000]  WDEV 00:
+                Name:ra0
+[   34.768000]          Wdev(list) Idx:0
+[   34.768000]           Idx:15
+[   34.772000] PpeDevRegHandler: interface ra0 register (0)
+[   34.776000]  WDEV 01:
+                Name:ra1
+[   34.780000]          Wdev(list) Idx:1
+[   34.784000]           Idx:16
+[   34.784000] PpeDevRegHandler: interface ra1 register (1)
+[   34.792000]  WDEV 02:
+                Name:ra2
+[   34.796000]          Wdev(list) Idx:2
+[   34.796000]           Idx:17
+[   34.800000] PpeDevRegHandler: interface ra2 register (2)
+[   34.804000]  WDEV 03:
+[   34.808000]  WDEV 04:
+[   34.808000]  WDEV 05:
+[   34.812000]  WDEV 06:
+[   34.812000]  WDEV 07:
+[   34.816000]  WDEV 08:
+[   34.820000]  WDEV 09:
+[   34.820000]  WDEV 10:
+[   34.824000]  WDEV 11:
+[   34.824000]  WDEV 12:
+[   34.828000]  WDEV 13:
+[   34.828000]  WDEV 14:
+[   34.832000]  WDEV 15:
+[   34.848000] Device Instance
+[   34.852000]  WDEV 00:
+                Name:rai0
+[   34.852000]          Wdev(list) Idx:0
+[   34.856000]           Idx:19
+[   34.860000] PpeDevRegHandler: interface rai0 register (3)
+[   34.864000]  WDEV 01:
+                Name:rai1
+[   34.868000]          Wdev(list) Idx:1
+[   34.872000]           Idx:20
+[   34.872000] PpeDevRegHandler: interface rai1 register (4)
+[   34.880000]  WDEV 02:
+                Name:rai2
+[   34.880000]          Wdev(list) Idx:2
+[   34.884000]           Idx:21
+[   34.888000] PpeDevRegHandler: interface rai2 register (5)
+[   34.892000]  WDEV 03:
+[   34.896000]  WDEV 04:
+[   34.896000]  WDEV 05:
+[   34.900000]  WDEV 06:
+[   34.900000]  WDEV 07:
+[   34.904000]  WDEV 08:
+[   34.908000]  WDEV 09:
+[   34.908000]  WDEV 10:
+[   34.912000]  WDEV 11:
+[   34.912000]  WDEV 12:
+[   34.916000]  WDEV 13:
+[   34.916000]  WDEV 14:
+[   34.920000]  WDEV 15:
+[   34.924000]  WDEV 16:
+[   34.924000]  WDEV 17:
+[   34.932000]
+[   34.932000] handle_wwan_hwnat_event: dev(wwan0) 1
+[   34.940000] PpeDevRegHandler: interface wwan0 register (6)
+iptables: Bad rule (does a matching rule exist in that chain?).
+ip6tables: Bad rule (does a matching rule exist in that chain?).
+ip6tables: Bad rule (does a matching rule exist in that chain?).
+/bin/sh: can't create /proc/tplink/led_control: nonexistent directory
+[   35.664000]
+[   35.664000] enable Switch Phy
+[   35.668000]
+[   35.668000] enable eth forward
+[   35.820000] ath_band_steering_netlink_receive 158 pid = 787
+[   35.828000] ath_band_steering_netlink_receive 158 pid = 787
+[   35.848000] ath_band_steering_netlink_receive 158 pid = 787
+[   35.860000] ath_band_steering_netlink_receive 158 pid = 787
+OPTIMIZED_FOR -> wifi
+NUM_OF_CPU -> 4
+wifiDomain1 -> 5G
+wifiDomain2 -> 2_4G
+CONFIG_RALINK_MT7621 -> y
+CONFIG_ARCH_MT7623 ->
+ra0 RPS: CPU0/1
+rai0 RPS: CPU0/2
+/sbin/smp.sh: line 78: can't create /sys/class/net/apcli0/queues/rx-0/rps_cpus: nonexistent directory
+/sbin/smp.sh: line 79: can't create /sys/class/net/apclii0/queues/rx-0/rps_cpus: nonexistent directory
+wwan0 RPS: CPU0/1
+eth0/1 RPS: CPU0/3
+[ cos_init ] 654:  Start ok, enable console input and output!
+/bin/sh: can't create /proc/tplink/console_ctl: nonexistent directory
+[ cos_init ] 667:  check_smd_error!
+error: device not found
+pidof mobile > /var/tmp/tmppidof
+echo -1000 > /proc/589/oom_score_adj
+pidof qmuxd > /var/tmp/tmppidof
+echo -1000 > /proc//oom_score_adj
+/bin/sh: can't create /proc//oom_score_adj: Permission denied
+pidof httpd > /var/tmp/tmppidof
+echo -1000 > /proc/605/oom_score_adj
+pidof dhcpd > /var/tmp/tmppidof
+echo -1000 > /proc/668/oom_score_adj
+Public key portion is:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCkghV0nYILfyVhvYeCH2hWeWzu0vMmVJLQAFPUHDNci972oNAXzQ/MJfuQMHJt3VrgmYpKCquprk5bbX/kcBggQDHuVs/2ZYjR0ysRIK0a0srZgLd2ShA8mVR2RsfRLoU9xKFzGeyuin7l21rz171tB/peW+xEFvRO9mw16HzsFQ== admin@Archer MR500
+Fingerprint: md5 91:71:6c:cd:35:29:8e:86:ff:1e:3a:14:38:94:fa:b9
+pidof mobile > /var/tmp/tmppidof
+echo -1000 > /proc/589/oom_score_adj
+pidof qmuxd > /var/tmp/tmppidof
+echo -1000 > /proc//oom_score_adj
+/bin/sh: can't create /proc//oom_score_adj: Permission denied
+pidof httpd > /var/tmp/tmppidof
+echo -1000 > /proc/605/oom_score_adj
+pidof dhcpd > /var/tmp/tmppidof
+echo -1000 > /proc/668/oom_score_adj
+1538352036 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](3402) ERROR: MP_REQ_SET_MODEM_MODE res:
+OK
+1538352036 [src/base/mobile_process.cpp DispatchEvent](756) WARN: Event (0x00000000) not found its logic thread.
+Public key portion is:
+ssh-dss AAAAB3NzaC1kc3MAAACBALtQt1lRdH3KOEG4rEjcu2EstMcVhNeUbIa1MkWx3yutoi/HYL0cFQem0Ul399zY9GiHSxIFRkJ31GLIjEGFOZcMkl0HvFbItTR5cbn+YO20bLsF5aQRpey7nuus+AgkQU2Lp4kEbP+k5msFM/t8MuB8RIj4XdE63MZbvbJAPAhZAAAAFQDTsVCWJ+xfIciHKJ7XwPSeny7WDwAAAIBimQ08S/6pYEP6+sJ+xEHx8heDObY0k5Qxvzszxenzor4aFXw3r4rIh+VEX6Mb56xF5rLUOqeQGM25H8VcgCn3AkF3li8kI2WttOdoxWKybN7ZPEQ3RKGc4LiS9sQErdCo1Bxer9jinxByjkizUtKTTodYDNUTnm/FmzZ3cGC4JAAAAIAzrtOqvzVNPmOD3PKeXUSL4HfHVD/UmkPNgRCO4Yok3rW09wlcia/D0mWWg0aMRAlziI4TYpb2YFtLI1pcERUSuOENchULh0BkB/OfcmQxRkqdiHkXsmeadNxJjnWTbpLWs8QvELI795s9zQhC+bQkRCTYUp+em+FB8/xVqdOpBg== admin@Archer MR500
+Fingerprint: md5 b0:a5:61:42:6d:98:c4:49:22:05:4c:fd:5d:3c:8c:7c
+1538352037 [src/base/mobile_process.cpp DispatchEvent](756) WARN: Event (0x00000000) not found its logic thread.
+1538352037 [src/base/mobile_process.cpp DispatchEvent](756) WARN: Event (0x00000000) not found its logic thread.
+1538352037 [src/base/mobile_process.cpp DispatchEvent](756) WARN: Event (0x00000000) not found its logic thread.
+1538352038 [src/base/mobile_process.cpp DispatchEvent](756) WARN: Event (0x00000000) not found its logic thread.
+1538352038 [src/base/mobile_process.cpp DispatchEvent](756) WARN: Event (0x00000000) not found its logic thread.
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](843) ERROR: The IPPASS indication setup successfully.
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](1984) ERROR: +GETCAPABILITY: LTE-FDD:B1,B3,B5,B7,B8,B20,B28
++GETCAPABILITY: LTE-TDD:B38,B40,B41
++GETCAPABILITY: WCDMA:B1,B3,B5,B8
++GETCAPABILITY: LTE-CATEGORY:CAT6
++GETCAPABILITY: LTE-CA:1
+OK
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](2012) ERROR: [band scan] lte band support mask: 0x1a0080800d5
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](2013) ERROR: [band scan] umts band support mask: 0x95
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](2014) ERROR: [band scan] category: cat6
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](2029) ERROR: [band scan] DM band_support_mask: 0x1a0080800d5
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](2030) ERROR: [band scan] DM lte_category = 6.
+1538352039 [src/comm/manager_comm_at.cpp ProcDeviceEventComm](2059) ERROR: [band scan] band sel mode is auto. band: 0x1a0080800d5
+1538352039 [src/sms/manager_sms_at.cpp ProcDeviceEventSms](317) ERROR: unknown reponse
+1538352039 [src/sms/manager_sms_at.cpp ProcDeviceEventSms](250) ERROR: unknown reponse:ERROR
+[   45.260000] MacTableInsertEntry(): wcid 1 =====
+[   45.268000] New Sta:38:78:62:ea:c2:bf
+[   45.272000] MT7613->wifi eid_ptr->Eid is 0
+[   45.276000] MT7613->wifi eid_ptr->Eid is 1
+[   45.280000] MT7613->wifi eid_ptr->Eid is 33
+[   45.284000] MT7613->wifi eid_ptr->Eid is 45
+[   45.288000] MT7613->wifi eid_ptr->Eid is 70
+[   45.292000] MT7613->wifi eid_ptr->Eid is 127
+[   45.296000] MT7613->wifi eid_ptr->Eid is 221
+[   45.300000] MT7613->wifi eid_ptr->Eid is 48
+[   45.304000] MT7613->wifi eid_ptr->Eid is 221
+[   45.312000] MT7613-->wifi RRM is enabled
+[   45.324000] ap_cmm_peer_assoc_req_action 2468
+[   45.324000]  assoc.client_addr = 38:78:62:ea:c2:bf,
+[   45.324000]  assoc.isBTMSupported = 1,
+[   45.324000]  assoc.isRRMSupported = 1,
+[   45.324000]  assoc.datarate_info.max_chwidth = 1,
+[   45.324000]  assoc.datarate_info.num_streams = 1,
+[   45.324000]  assoc.datarate_info.phymode = 1,
+[   45.324000]  assoc.datarate_info.max_txpower = 20,
+[   45.324000]  assoc.datarate_info.max_MCS = 7
+[   45.364000] ap_cmm_peer_assoc_req_action 2470 send ATH_EVENT_BSTEERING_NODE_ASSOCIATED
+[   45.372000] br0Ip = c0a83201, brNetmask = ffffff00
+[   45.376000] pSsid=theRocinante
+[   45.380000] RRM_EnqueueNeighborRep() : send Neighbor RSP
+[   45.492000] AP SETKEYS DONE - AKMMap=WPA2PSK, PairwiseCipher=AES, GroupCipher=AES, wcid=1 from 38:78:62:EA:C2:BF
+[   45.492000]
+[   45.504000] PTK:37dd053ea899db34efccb5783d6e7fcabbc057a61263e946d83644635e1a98d85c3e11241e7ecba300f99b60919fa70697fa09f4ee40710fdc825ea8d8461352
+SIOCSARP: No such device or address
+[ get_mac_from_ip ] 088: error, SIOCGARP fail ip=0x6432a8c0  errno=6
+
+[   45.608000] br0Ip = c0a83201, brNetmask = ffffff00
+SIOCSARP: No such device or address
+SIOCSARP: No such device or address
+[ get_mac_from_ip ] 088: error, SIOCGARP fail ip=0x6432a8c0  errno=6
+
+SIOCSARP: No such device or address
+SIOCSARP: No such device or address
+[   46.552000] Rcv Wcid(1) AddBAReq
+[   46.556000] Start Seq = 00000011
+
+starting pid 116, tty '': '/sbin/getty -L ttyS1 115200 vt100'
+
+Archer MR500 login:
+ 
