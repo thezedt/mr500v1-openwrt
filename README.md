@@ -8,21 +8,7 @@ Ever since I got this router I encountered connection stability issues (well rep
 
 **The MR500 v1 (EU) is identical on first look at the PCB with its (supported) bigger brother MR600v2, but uses a different LTE modem.**
 
-### Identification:
-
-Since Tp-Link really enjoys versioning out their devices and mix-matching the hardware used in them it's necessary to first identify your device properly.
-
-Software signature:
-
-![software-version](images/software.png)
-
-Hardware label:
-
-![hardware-label](images/hardware-label.jpg)
-
-_My device initially ran operator-specific firmware, hence the (ROORG) labeling._
-
-### Specifications:
+### Specifications
 
 * SoC: [Mediatek MT7621DAT 880MHz](photos/PIC_20240106_200715.JPG)
 * RAM: 128MB DDR3
@@ -48,7 +34,25 @@ _My device initially ran operator-specific firmware, hence the (ROORG) labeling.
 	Bus 001 Device 002: ID 2cb7:0a05 Fibocom FG621 Module
 	Bus 002 Device 001: ID 1d6b:0003 Linux 6.6.67 xhci-hcd xHCI Host Controller
 
+### Identification
+
+Since Tp-Link really enjoys versioning out their devices and mix-matching the hardware used in them it's necessary to first identify your device properly.
+
+Software signature:
+
+![software-version](images/software.png)
+
+Hardware label:
+
+![hardware-label](images/hardware-label.jpg)
+
+_My device initially ran operator-specific firmware, hence the (ROORG) labeling._
+
 ---
+> [!CAUTION]
+> **Don't proceed unless you create full flash backups, are comfortable around flash programmers and/or bricked devices or can easily afford to buy a new router.**
+> **Opening the device to access the serial console will also most likely void your warranty (and definitely break some/all plastic clips)**
+
 ## Installation
 
 > [!IMPORTANT]  
@@ -108,7 +112,7 @@ MT7621 #
 
 If you want to poke around the OEM firmware first, the login credentials are _admin / 1234_
 
-4. Transfer the firmware via TFTP and then configure U-Boot to boot OpenWrt from ram:
+4. Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then configure U-Boot to boot OpenWrt from ram:
     
     ```
     # tftpboot
@@ -119,20 +123,20 @@ If you want to poke around the OEM firmware first, the login credentials are _ad
 
 ### Status
 
-What works:
+**What works:**
 - WAN and LAN 1-3 ports are correctly identified and work as expected.
 - Both 2.4G and 5G wirelesses are recognized and functional (I didn't do throughput tests as I mostly focused on getting the mobile connection up and running, which provides nowhere near the wireless bandwidth capabilities). 
 - LEDs are all functional (and also configurable through LuCI):
 	- Power, WAN, LAN and WIFI work out-of-the-box. The single WIFI led is attached to the 5G wireless by default, but can be reassigned in LuCI. 
-	- The 4G+ led can be easily configured to indicate WWAN status (but will no longer differentiate between 4G and 4G+ connectivity as with the retail firmware).
-	- The mobile signal leds are a task for another day.
+	- The 4G+ led can be configured to indicate WWAN status (but no longer differentiates between 4G and 4G+ connectivity as with the retail firmware).
+	- _The mobile signal leds are a task for another day._
 
-What doesn't work:
+**What doesn't work:**
 - So far everything seems to work for basic functionality. Advanced LTE monitoring/band locking require additional steps as described below. 
 	- Individual signal numbers seem in the correct range, but I have no precise way of confirming them
 	- At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version)
-	- Secondary bands functionality and reporting remain to be tested with a CA-capable SIM/operator.
-- Stability improvements? Remains to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
+	- _Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._
+- Stability improvements? Remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
 
 ![openwrt](images/openwrt.png)
 

@@ -32,6 +32,7 @@ dcache: sets:256, ways:4, linesz:32 ,total:32768
 #Reset_MT7530
 set LAN/WAN WLLLL                                                             0
 
+					<-- quickly type 'tpl' around here
 
 4: System Enter Boot Command Line Interface.
 
@@ -74,7 +75,7 @@ Filename 'test.bin'.
 Loading: Got ARP REPLY, set server/gtwy eth addr (00:00:00:00:02:8e)
 Got it
 
-[....]
+[...] some more failed attempts while I didn't have the initramfs file ready [...]
 
 TFTP error: 'File not found' (1)
 Starting again
@@ -376,36 +377,16 @@ Please press Enter to activate this console.
 [   38.141993] br-lan: port 3(lan3) entered blocking state
 [   38.155260] br-lan: port 3(lan3) entered forwarding state
 [   38.161795] IPv6: ADDRCONF(NETDEV_CHANGE): br-lan: link becomes ready
-
-
-
-BusyBox v1.36.1 (2024-09-23 12:34:46 UTC) built-in shell (ash)
-
-  _______                     ________        __
- |       |.-----.-----.-----.|  |  |  |.----.|  |_
- |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
- |_______||   __|_____|__|__||________||__|  |____|
-          |__| W I R E L E S S   F R E E D O M
- -----------------------------------------------------
- OpenWrt 23.05.5, r24106-10cc5fcd00
- -----------------------------------------------------
-=== WARNING! =====================================
-There is no root password defined on this device!
-Use the "passwd" command to set up a new password
-in order to prevent unauthorized SSH logins.
---------------------------------------------------
-root@OpenWrt:/# df
-Filesystem           1K-blocks      Used Available Use% Mounted on
-tmpfs                    60240     15592     44648  26% /
-tmpfs                    60240        72     60168   0% /tmp
-tmpfs                      512         0       512   0% /dev
-root@OpenWrt:/# [   81.402438] mt7530-mdio mdio-bus:1f lan1: Link is Up - 100Mbps/Full - flow control rx/tx
+[   81.402438] mt7530-mdio mdio-bus:1f lan1: Link is Up - 100Mbps/Full - flow control rx/tx
 [   81.402513] br-lan: port 1(lan1) entered blocking state
 [   81.415779] br-lan: port 1(lan1) entered forwarding state
 [   92.876063] mt7530-mdio mdio-bus:1f lan1: Link is Down
 [   92.876095] br-lan: port 1(lan1) entered disabled state
 [   98.528869] mtk_soc_eth 1e100000.ethernet wan: Link is Up - 100Mbps/Full - flow control rx/tx
 [   98.528935] IPv6: ADDRCONF(NETDEV_CHANGE): wan: link becomes ready
+
+			<---- flashing sysupgrade image from LuCI at this point
+			
 Watchdog handover: fd=3
 - watchdog -
 Watchdog does not have CARDRESET support
