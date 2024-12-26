@@ -1,14 +1,16 @@
 # My OpenWrt on Tp-Link MR500v1 (EU) adventure
 
+Ever since I got this router I encountered connection stability issues (well reported on the Tp-Link forums 
+[here](https://community.tp-link.com/en/home/forum/topic/649224), 
+[here](https://community.tp-link.com/en/home/forum/topic/605538), 
+[here](https://community.tp-link.com/en/home/forum/topic/616946), 
+[here](https://community.tp-link.com/en/home/forum/topic/603938)...), and as soon as I took it apart and discovered it uses an OpenWrt supported platform (MT7621 / mipsel_24kc) I looked into finding a way to bring OpenWrt on it (and hopefully resolve the disconnection issues, or at least find a better workaround than scheduled daily router reboots). 
 
-Ever since I got this router I encountered connection stability issues (well reported on the Tp-Link forums here, here, here...), and as soon as I took it apart and discovered it uses an OpenWrt supported platform (MT7621 / mipsel_24kc) I looked into finding a way to bring OpenWrt on it (and hopefully resolve the disconnection issues, or at least find a better workaround than daily router reboots). 
-
-
-**The MR500 v1 (EU) is nearly identical with its (supported) bigger brother, MR600v2 which uses a different LTE modem.**
+**The MR500 v1 (EU) is identical on first look at the PCB with its (supported) bigger brother MR600v2, but uses a different LTE modem.**
 
 ### Identification:
 
-Since Tp-Link really enjoys versioning out their devices and mix-matching the hardware used in them it's necessary to first identify your device.
+Since Tp-Link really enjoys versioning out their devices and mix-matching the hardware used in them it's necessary to first identify your device properly.
 
 Software signature:
 
@@ -18,7 +20,7 @@ Hardware label:
 
 ![hardware-label](images/hardware-label.jpg)
 
-_My device initially ran operator-specific firmware, hence the (ROORG) labelling._
+_My device initially ran operator-specific firmware, hence the (ROORG) labeling._
 
 ### Specifications:
 
@@ -31,7 +33,7 @@ _My device initially ran operator-specific firmware, hence the (ROORG) labelling
 * Ethernet: MT7530, 4x 1000Base-T.
 * UART: [Serial console (115200 8n1), J1(GND:3)](photos/PIC_20240106_201317.JPG)
 * Buttons: Reset, WPS.
-* LED: Power, WAN, 4G+, single WiFi (2GHz and/or? 5GHz), LAN, Signal1, Signal2, Signal3 
+* LED: Power, WAN, 4G+, single WiFi, LAN, Signal1, Signal2, Signal3 
 
 ### Hardware
 
@@ -115,11 +117,32 @@ If you want to poke around the OEM firmware first, the login credentials are _ad
     
 5. With OpenWrt booted in _recovery (initramfs)_ mode, use the web interface (or console) to install the `sysupgrade` OpenWrt firmware.
 
+### Status
+
+What works:
+- WAN and LAN 1-3 ports are correctly identified and work as expected.
+- Both 2.4G and 5G wirelesses are recognized and functional (I didn't do throughput tests as I mostly focused on getting the mobile connection up and running, which provides nowhere near the wireless bandwidth capabilities). 
+- LEDs are all functional (and also configurable through LuCI):
+	- Power, WAN, LAN and WIFI work out-of-the-box. The single WIFI led is attached to the 5G wireless by default, but can be reassigned in LuCI. 
+	- The 4G+ led can be easily configured to indicate WWAN status (but will no longer differentiate between 4G and 4G+ connectivity as with the retail firmware).
+	- The mobile signal leds are a task for another day.
+
+What doesn't work:
+- So far everything seems to work for basic functionality. Advanced LTE monitoring/band locking require additional steps as described below. 
+	- Individual signal numbers seem in the correct range, but I have no precise way of confirming them
+	- At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version)
+	- Secondary bands functionality and reporting remain to be tested with a CA-capable SIM/operator.
+- Stability improvements? Remains to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
+
+![openwrt](images/openwrt.png)
+
 ---
 ## LTE
 
 > [!NOTE]
 > The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)), not QMI as the modem on MR600 does, so the initial WWAN network setup is incorrect.
+
+_This step is easiest to do with wired WAN connectivity since LTE is not functional yet_
 
 Use the package manager to install
 	
@@ -163,7 +186,7 @@ In the same folder are also the necessary tweaked and new files that are require
 
 #### 3ginfo-lite
 
-1. Install the apropiate achitecture `sms-tool` ipk.
+1. Install the appropriate architecture `sms-tool` ipk.
 
 2. Install `luci-app-3ginfo-lite` ipk. 
 
