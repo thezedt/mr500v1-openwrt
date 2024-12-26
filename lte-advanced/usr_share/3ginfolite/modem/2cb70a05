@@ -65,10 +65,10 @@ IFS="
 "
 
 	IDX=1
-	LINES=$(echo "$O" | grep -E "^SCC[0-9]: 2")
+	LINES=$(echo "$O" | grep -E "^SCC[0-9]:2")
 	for LINE in $LINES; do
-		T=$(echo "$LINE" | awk -F[:,] '/^SCC'$IDX': 2,./{print $4}')
-		T=$((T - 100)) # secondary band is still incremended ?
+		T=$(echo "$LINE" | awk -F[:,] '/^SCC'$IDX':2,./{print $4}')
+		T=$((T - 100)) # secondary band is still incremended
 		
 		T2=$(band4g $T)
 		MODE="$MODE / $T2"

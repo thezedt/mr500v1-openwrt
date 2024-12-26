@@ -145,7 +145,8 @@ After another reboot you should find yourself in the permanent OpenWrt firmware.
 - So far everything seems to work for basic functionality. Advanced LTE monitoring/band locking require additional steps as described below. 
 	- Individual signal numbers seem in the correct range, but I have no precise way of confirming them
 	- At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version)
-	- _Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._
+	- ~_Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._~
+	- Carrier aggregation and dual band display works with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
 - Stability improvements? Remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
 
 ![openwrt](images/openwrt.png)
