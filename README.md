@@ -146,7 +146,7 @@ After another reboot you should find yourself in the permanent OpenWrt firmware.
 	- Individual signal numbers seem in the correct range, but I have no precise way of confirming them
 	- At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version)
 	- ~_Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._~
-	- Carrier aggregation and dual band display works with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
+	- Carrier aggregation and dual band info display works with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
 - Stability improvements? Remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
 
 ![openwrt](images/openwrt.png)
@@ -232,7 +232,7 @@ then save the changes.
 
 4. Add modem-specific file
 
-Also here, identify the `modem` subfolder. Inside create a new file named **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/3ginfolite/modem/2cb70a05).
+Also here, identify the `modem` subfolder. Inside create a new file named **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/3ginfolite/modem/usb/2cb70a05).
 
 Once both files are edited/created successfully, the details should finally be displayed in LuCI.
 
