@@ -186,7 +186,8 @@ Or do it manually in `/etc/config/network`:
 
 ![wwan0-interface](images/wwan0-eth1.png)
 
-The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I'ave had it configured and working with the official firmware before).
+The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I'ave had it configured and working with the official firmware before).  
+To get the existing APN/PDP configuration, the `AT+CGDCONT?` AT command can be used.
 
 At this point the mobile connection should be up and running (check if the wwan0 interface receives an IP address from the ISP). This process may take up to several minutes after (re)boot or a modem restart. 
 

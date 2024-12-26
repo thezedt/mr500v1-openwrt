@@ -1,5 +1,5 @@
 # Fibocom modems with ProdID=0a05
-# FG621-EA in ECM mode (LTE CAT6)
+# FG621-EA in NCM mode (LTE CAT6)
 
 O=$(sms_tool -d $DEVICE at "AT+GTCCINFO?;+GTCAINFO?")
 
@@ -26,7 +26,7 @@ if [ "x$MODE" = "xLTE" ]; then
 		fi
 		T=$(echo "$T1" | awk -F, '{print $9}')
 		if [ -n "$T" ]; then
-			T=$((T - 100))
+			#T=$((T - 100)) # for lte the primary band number is reported directly
 			MODE="$MODE | $(band4g $T)"
 			PBAND="$(band4g $T "")"
 		fi
@@ -68,7 +68,7 @@ IFS="
 	LINES=$(echo "$O" | grep -E "^SCC[0-9]: 2")
 	for LINE in $LINES; do
 		T=$(echo "$LINE" | awk -F[:,] '/^SCC'$IDX': 2,./{print $4}')
-		T=$((T - 100))
+		T=$((T - 100)) # secondary band is still incremended ?
 		
 		T2=$(band4g $T)
 		MODE="$MODE / $T2"
