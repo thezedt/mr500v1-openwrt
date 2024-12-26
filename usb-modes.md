@@ -40,16 +40,16 @@ By default the Fibocom FG621-EA in the Tp-Link MR500v1(EU) is configured to work
 
 	OK 
 	
-The current is verified with:
+The current mode is verified with:
 
 	AT+GTUSBMODE?
 
 Theoretically, the modem can be switched between its supported modes using AT commands:
 
-	AT+GTUSBMODE=**_xx_**
+	AT+GTUSBMODE=xx
 
-Where **_xx_** can be any of the numbers listed in the modes table below.  
-Better check if the desired mode is in the list of the accepted values for your particular device before attempting a switch, though:
+Where **_xx_** can be any of the numbers listed in the table below.  
+Before making changes, write down the current mode value and check if the desired mode is in the accepted list for your particular device:
 
 	AT+GTUSBMODE=?
 

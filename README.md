@@ -60,12 +60,15 @@ _My device initially ran operator-specific firmware, hence the (ROORG) labeling.
 > While a `factory` image exists, the MR600 does not have a device page yet so I cannot confirm if it is possible to migrate to OpenWrt directly through the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the answer.
 > If that is already supported, the same `factory` image may or may not work with MR500's OEM web interface to allow for firmware migration - this will remain your test to take. 
 
-1. Download the [MR600v2 OpenWrt initramfs-image](https://firmware-selector.openwrt.org/?version=23.05.5&target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) (either 23.05.x or 24.10.x will do)
+1. Start a TFTP server - [Tftpd64](https://pjo2.github.io/tftpd64/) will do just fine
 
-Place it into a TFTP server root directory and rename it to `test.bin`  
-Configure the TFTP server to listen at 192.168.0.5/24. Connect to the router using one of the 3 LAN ports.
+Configure the computer's network adapter and the TFTP server to listen on 192.168.0.5/24. Connect to the router using one of the 3 LAN ports.
 
-3. Connect to the serial console.
+2. Download the [MR600v2 OpenWrt initramfs (kernel) image](https://firmware-selector.openwrt.org/?version=23.05.5&target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) from the ImageBuilder (either 23.05.x or 24.10.x will do)
+
+Place it into the TFTP server's root directory and rename it to `test.bin`
+
+3. Connect to the router's serial console with a USB/TTL adapter.
 
 Attach power and interrupt the U-Boot boot procedure when prompted (type `tpl`).
 
@@ -112,14 +115,21 @@ MT7621 #
 
 If you want to poke around the OEM firmware first, the login credentials are _admin / 1234_
 
-4. Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then configure U-Boot to boot OpenWrt from ram:
+4. Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
     
     ```
     # tftpboot
+	
+	...transfer happens here...
+	
     # bootm
     ```
-    
-5. With OpenWrt booted in _recovery (initramfs)_ mode, use the web interface (or console) to install the `sysupgrade` OpenWrt firmware.
+
+The rooter will boot the kernel image and start in _recovery mode_.
+	
+5. With OpenWrt booted in _recovery (initramfs)_ mode, use the web interface or console to install the `sysupgrade` OpenWrt firmware (which you can also obtain from the ImageBuilder).
+
+After another reboot you should find yourself in the permanent OpenWrt firmware.
 
 ### Status
 
@@ -144,9 +154,9 @@ If you want to poke around the OEM firmware first, the login credentials are _ad
 ## LTE
 
 > [!NOTE]
-> The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)), not QMI as the modem on MR600 does, so the initial WWAN network setup is incorrect.
+> The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)), not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect.
 
-_This step is easiest to do with wired WAN connectivity since LTE is not functional yet_
+_This initial step is easiest to do with wired WAN connectivity since LTE is not functional yet_
 
 Use the package manager to install
 	
@@ -176,7 +186,8 @@ Or do it manually in `/etc/config/network`:
 
 ![wwan0-interface](images/wwan0-eth1.png)
 
-The modem should automatically figure out the required APN from the SIM/network (at least it did for me).  
+The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I'ave had it configured and working with the official firmware before).
+
 At this point the mobile connection should be up and running (check if the wwan0 interface receives an IP address from the ISP). This process may take up to several minutes after (re)boot or a modem restart. 
 
 ### Advanced LTE
