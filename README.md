@@ -1,4 +1,4 @@
-# My OpenWrt on Tp-Link MR500v1 (EU) adventure
+# OpenWrt on Tp-Link MR500v1 (EU) adventure
 
 Ever since I got this router I encountered connection stability issues (well reported on the Tp-Link forums 
 [here](https://community.tp-link.com/en/home/forum/topic/649224), 
@@ -16,8 +16,8 @@ Ever since I got this router I encountered connection stability issues (well rep
 * LTE Modem: [**Fibocom FG621-EA**](photos/PIC_20240106_200843.JPG)
 * WiFi 5GHz: [Mediatek MT7613BEN](photos/PIC_20240106_200807.JPG)
 * WiFi 2.4GHz: [Mediatek MT7603EN](photos/PIC_20240106_200817.JPG)
-* Ethernet: MT7530, 4x 1000Base-T.
-* UART: [Serial console (115200 8n1), J1(GND:3)](photos/PIC_20240106_201317.JPG)
+* Ethernet: MT7530, 4x 1000Mbps
+* UART: [Serial console (115200 8n1) @ J1](photos/PIC_20240106_201317.JPG)
 * Buttons: Reset, WPS.
 * LED: Power, WAN, 4G+, single WiFi, LAN, Signal1, Signal2, Signal3 
 
@@ -70,6 +70,8 @@ Place it into the TFTP server's root directory and rename it to `test.bin`
 
 3. Connect to the router's serial console with a USB/TTL adapter.
 
+If you want to poke around the Tp-Link firmware first, the login credentials are _admin / 1234_
+
 Attach power and interrupt the U-Boot boot procedure when prompted (type `tpl`).
 
 ```
@@ -113,8 +115,6 @@ U-Boot 1.1.3 (Nov 22 2023 - 16:37:42)
 MT7621 #
 ```
 
-If you want to poke around the OEM firmware first, the login credentials are _admin / 1234_
-
 4. Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
     
     ```
@@ -125,11 +125,11 @@ If you want to poke around the OEM firmware first, the login credentials are _ad
     # bootm
     ```
 
-The rooter will boot the kernel image and start in _recovery mode_.
+The router will boot the kernel image and start OpenWrt in _recovery mode_.
 	
-5. With OpenWrt booted in _recovery (initramfs)_ mode, use the web interface or console to install the `sysupgrade` OpenWrt firmware (which you can also obtain from the ImageBuilder).
+5. With OpenWrt booted in **_recovery (initramfs)_** mode, use the web interface or console to install the `sysupgrade` OpenWrt firmware (which you can also obtain from the ImageBuilder).
 
-After another reboot you should find yourself in the permanent OpenWrt firmware.
+After another reboot you should find yourself in the permanently installed OpenWrt firmware.
 
 ### Status
 
@@ -140,14 +140,16 @@ After another reboot you should find yourself in the permanent OpenWrt firmware.
 	- Power, WAN, LAN and WIFI work out-of-the-box. The single WIFI led is attached to the 5G wireless by default, but can be reassigned in LuCI. 
 	- The 4G+ led can be configured to indicate WWAN status (but no longer differentiates between 4G and 4G+ connectivity as with the retail firmware).
 	- _The mobile signal leds are a task for another day._
+- Individual signal numbers seem in the correct range, but I have no precise way of confirming them.
+- At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version).
+- Carrier aggregation and second band info works ([(1)](images/3ginfo-CA-3&20.png), [(2)](images/3ginfo-CA-7&20.png)) with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
+	- Speeds are on par with another MT7621-based router running a Qualcomm EM12 modem placed side by side and on the same mobile operator and identical data plan.
 
 **What doesn't work:**
 - So far everything seems to work for basic functionality. Advanced LTE monitoring/band locking require additional steps as described below. 
-	- Individual signal numbers seem in the correct range, but I have no precise way of confirming them
-	- At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version)
 	- ~_Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._~
-	- Carrier aggregation and dual band info display works with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
-- Stability improvements? Remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
+	- 3ginfo status page fails randomly and after being left open and refreshing for a while. Force refreshing several times or logging out of LuCI and logging back in seems to return it to functioning order. I assume either the modem is slow to respond or randmly returns unexpected or garbage data. 
+- Stability improvements remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
 
 ![openwrt](images/openwrt.png)
 
@@ -155,7 +157,7 @@ After another reboot you should find yourself in the permanent OpenWrt firmware.
 ## LTE
 
 > [!NOTE]
-> The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)), not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect.
+> The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)) not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect.
 
 _This initial step is easiest to do with wired WAN connectivity since LTE is not functional yet_
 
@@ -175,11 +177,11 @@ This will in turn also install the required dependencies:
 	kmod-usb-net-huawei-cdc-ncm
 	comgt-ncm
     
-Reboot the router. After the reboot there is a new network device available as `eth1`.
+Reboot the router. After the reboot there is a new network device `eth1` available.
 
 Use LuCI to delete pre-configured `wwan0`.  
 Create a new `wwan0` interface with protocol `DHCP` and attached to the new `eth1` device.  
-Or do it manually in `/etc/config/network`:
+Or do this manually in `/etc/config/network`:
 
 	config interface 'wwan0'
 		option proto 'dhcp'
@@ -197,7 +199,7 @@ At this point the mobile connection should be up and running (check if the wwan0
 For signal monitoring and band selection/locking **4IceG**'s awesome [luci-app-3ginfo-lite](https://github.com/4IceG/luci-app-3ginfo-lite) and [luci-app-modemband](https://github.com/4IceG/luci-app-3ginfo-lite) will do miracles.  
 However, the Fibocom modem is not supported in the current (as of December 2024) builds and will require a bit of manual tinkering. 
 
-The install processes for both are best described in their respective repos, but for convenience I have included the versions I successfully tested and tweaked in the [`lte-advanced/`](lte-advanced/) folder on this repo (in the appropriately numbered order).
+The install processes for both are best described in their respective repos, but for convenience I have included the versions I successfully tested and tweaked in the [`lte-advanced/`](lte-advanced/) folder on this repo (in the appropriately numbered order). Download and use random files off the internet at your discretion. 
 
 In the same folder are also the necessary tweaked and new files that are required for modem support.
 
@@ -232,9 +234,9 @@ then save the changes.
 
 4. Add modem-specific file
 
-Also here, identify the `modem` subfolder. Inside create a new file named **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/3ginfolite/modem/usb/2cb70a05).
+Now locate the `modem` subfolder. Inside create a new file named **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/3ginfolite/modem/usb/2cb70a05).
 
-Once both files are edited/created successfully, the details should finally be displayed in LuCI.
+Once both files are edited/created successfully, the details should finally be displayed in LuCI (after a while or a refresh).
 
 ![3ginfolite](images/3ginfo-telekom.png)
 
