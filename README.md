@@ -199,7 +199,8 @@ At this point the mobile connection should be up and running (check if the wwan0
 For signal monitoring and band selection/locking **4IceG**'s awesome [luci-app-3ginfo-lite](https://github.com/4IceG/luci-app-3ginfo-lite) and [luci-app-modemband](https://github.com/4IceG/luci-app-3ginfo-lite) will do miracles.  
 However, the Fibocom modem is not supported in the current (as of December 2024) builds and will require a bit of manual tinkering. 
 
-The install processes for both are best described in their respective repos, but for convenience I have included the versions I successfully tested and tweaked in the [`lte-advanced/`](lte-advanced/) folder on this repo (in the appropriately numbered order). Download and use random files off the internet at your discretion. 
+The install processes for both are best described in their respective repos, but for convenience I have included the versions I successfully tested and modded in the [`lte-advanced/`](lte-advanced/) folder on this repo (in the appropriately numbered order).
+Download and use random files off the internet at your discretion.
 
 In the same folder are also the necessary tweaked and new files that are required for modem support.
 
@@ -219,22 +220,9 @@ Save and Apply.
 
 You'll notice there is still no information on the **Details** tab. 
 
-3. Patch [3ginfo.sh](lte-advanced/usr_share/3ginfolite/3ginfo.sh)
+3. Patch `/usr/share/3ginfo-lite/3ginfo.sh` using SCP or the console according to [these changes](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-bfb9df31e7c9175e9d10b5dca27891b6c20b9997ed0df263b257f34796d5067a).
 
-Use SCP or the console to explore the router's filesystem and navigate to `/usr/share/3ginfo-lite/`.  
-Here, edit `3ginfo.sh`, look for 
-	
-	O=$(sms_tool -D -d $DEVICE at "AT+CPIN?;+CSQ;+COPS=3,0;+COPS?;+COPS=3,2;+COPS?;+CREG=2;+CREG?")
-	
-and replace with
-
-	O=$(sms_tool -D -d $DEVICE at "AT+CSQ;+COPS=3,0;+COPS?;+COPS=3,2;+COPS?;+CREG=2;+CREG?")
-	
-then save the changes.
-
-4. Add modem-specific file
-
-Now locate the `modem` subfolder. Inside create a new file named **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/3ginfolite/modem/usb/2cb70a05).
+4. Inside the `/usr/share/3ginfo-lite/modem/` subfolder create a new file named **`2cb70a05`** (the VID/PID of the modem) with [this content](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-81e9e3e254e33b574ed506eb3df71e979e8ca6c33126616a4eecc5c9050dbe60).
 
 Once both files are edited/created successfully, the details should finally be displayed in LuCI (after a while or a refresh).
 
@@ -270,4 +258,8 @@ Complete modem initialization after a band change can take up to several minutes
 
 #### Signal level LEDs
 
-Next leg of the adventure...
+Probably starting from [this script](https://forum.openwrt.org/t/cellular-signal-level-indicator/60543/15), adapt it to read signal level with AT commands instead of (unavailable) `uqmi`. `3ginfo-lite` should be able to provide the inspiration for this. 
+
+### Actual MR500v1-dedicated OpenWrt build
+
+I'm aiming to test the router (and modem) stability for about a month of uptime (that's about the maximum connection uptime I've had with the official beta firmwares before connectivity went bust) before putting the extra work in for the next steps.
