@@ -153,7 +153,7 @@ After another reboot you should find yourself in the permanently installed OpenW
 **What doesn't work:**
 - So far everything seems to work for basic functionality. Advanced LTE monitoring and band selection require additional steps as described below. 
 	- ~_Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._~
-	- 3ginfo status page fails randomly and after being left open and refreshing for a while. Force refreshing several times or logging out of LuCI and logging back in seems to return it to functioning order. I assume either the modem is slow to respond or randmly returns unexpected or garbage data. 
+	- 3ginfo status page fails randomly and after being left open and refreshing for a while. Force refreshing several times or logging out of LuCI and logging back in seems to return it to functioning order. I assume either the modem is slow to respond or randomly returns unexpected or garbage data. 
 - Stability improvements remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
 
 **Updates:**

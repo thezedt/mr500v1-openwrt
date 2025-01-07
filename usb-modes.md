@@ -1,4 +1,4 @@
-By default the Fibocom FG621-EA in the Tp-Link MR500v1(EU) is configured to work in NMC mode (Fibocom-designated mode 36).
+By default the Fibocom FG621-EA in the Tp-Link MR500v1(EU) is configured to work in NCM mode (Fibocom-designated mode 36).
 
 	root@OpenWrt:/# picocom /dev/ttyUSB0
 	picocom v3.1
