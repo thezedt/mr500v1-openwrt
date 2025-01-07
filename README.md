@@ -1,4 +1,4 @@
-# OpenWrt on Tp-Link MR500v1 (EU) adventure
+# OpenWrt on Tp-Link MR500v1 (EU)
 
 Ever since I got this router I encountered connection stability issues (well reported on the Tp-Link forums 
 [here](https://community.tp-link.com/en/home/forum/topic/649224), 
@@ -6,7 +6,10 @@ Ever since I got this router I encountered connection stability issues (well rep
 [here](https://community.tp-link.com/en/home/forum/topic/616946), 
 [here](https://community.tp-link.com/en/home/forum/topic/603938)...), and as soon as I took it apart and discovered it uses an OpenWrt supported platform (MT7621 / mipsel_24kc) I looked into finding a way to bring OpenWrt on it (and hopefully resolve the disconnection issues, or at least find a better workaround than scheduled daily router reboots). 
 
-**The MR500 v1 (EU) is identical on first look at the PCB with its (supported) bigger brother MR600v2, but uses a different LTE modem.**
+**The MR500 v1 (EU) is identical on first look with its (supported) bigger brother MR600v2, but uses a different LTE modem.**
+
+![mr600v2-vs-mr500v1](images/mr600v2-vs-mr500v1.jpg)
+_MR600v2 photo thanks to [kernelpanic1](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/160)_
 
 ### Specifications
 
@@ -20,6 +23,8 @@ Ever since I got this router I encountered connection stability issues (well rep
 * UART: [Serial console (115200 8n1) @ J1](photos/PIC_20240106_201317.JPG)
 * Buttons: Reset, WPS.
 * LED: Power, WAN, 4G+, single WiFi, LAN, Signal1, Signal2, Signal3 
+
+Board photos: [front](photos/PIC_20240106_200401.JPG), [back](photos/PIC_20240106_200119.JPG), [serial pins](photos/PIC_20240106_201317.JPG). 
 
 ### Hardware
 
