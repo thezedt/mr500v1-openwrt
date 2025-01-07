@@ -56,11 +56,11 @@ _My device initially ran operator-specific firmware, hence the (ROORG) labeling.
 ## Installation
 
 > [!IMPORTANT]  
-> I have **only** used the serial console method as described in the [MR600's commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=78110c3b5fce119d13cd45dadd33ca396c8ce197) to install OpenWrt on the MR500.  
-> While a `factory` image exists, the MR600 does not have a device page yet so I cannot confirm if it is possible to migrate to OpenWrt directly through the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the answer.
-> If that is already supported, the same `factory` image may or may not work with MR500's OEM web interface to allow for firmware migration - this will remain your test to take. 
+> I have used **only** the serial console method as described in the [MR600 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=78110c3b5fce119d13cd45dadd33ca396c8ce197) to install OpenWrt on the MR500.  
+> While a `factory` image exists, the MR600 does not have a device page yet so I cannot confirm if it is possible to install OpenWrt directly from the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the answer.
+> If that is already supported, the same `factory` image may or may not work with MR500's OEM web interface to allow for firmware migration - this is something I did not test. 
 
-1. Start a TFTP server - [Tftpd64](https://pjo2.github.io/tftpd64/) will do just fine
+1. Start a TFTP server - [Tftpd64](https://pjo2.github.io/tftpd64/) will do just fine.
 
 Configure the computer's network adapter and the TFTP server to listen on 192.168.0.5/24. Connect to the router using one of the 3 LAN ports.
 
@@ -68,7 +68,7 @@ Configure the computer's network adapter and the TFTP server to listen on 192.16
 
 Place it into the TFTP server's root directory and rename it to `test.bin`
 
-3. Connect to the router's serial console with a USB/TTL adapter.
+3. Connect to the router's serial console with a USB/UART adapter.
 
 If you want to poke around the Tp-Link firmware first, the login credentials are _admin / 1234_
 
@@ -135,9 +135,9 @@ After another reboot you should find yourself in the permanently installed OpenW
 
 **What works:**
 - WAN and LAN 1-3 ports are correctly identified and work as expected.
-- Both 2.4G and 5G wirelesses are recognized and functional (I didn't do throughput tests as I mostly focused on getting the mobile connection up and running, which provides nowhere near the wireless bandwidth capabilities). 
+- Both 2.4Ghz and 5Ghz wirelesses are recognized and functional (I didn't do throughput tests as I mostly focused on getting the mobile connection up and running, which provides nowhere near the wireless bandwidth capabilities).
 - LEDs are all functional (and also configurable through LuCI):
-	- Power, WAN, LAN and WIFI work out-of-the-box. The single WIFI led is attached to the 5G wireless by default, but can be reassigned in LuCI. 
+	- Power, WAN, LAN and WIFI work out-of-the-box. The single WIFI led is attached to the 5Ghz wireless by default, but can be reassigned in LuCI.
 	- The 4G+ led can be configured to indicate WWAN status (but no longer differentiates between 4G and 4G+ connectivity as with the retail firmware).
 	- _The mobile signal leds are a task for another day._
 - Individual signal numbers seem in the correct range, but I have no precise way of confirming them.
@@ -146,18 +146,24 @@ After another reboot you should find yourself in the permanently installed OpenW
 	- Speeds are on par with another MT7621-based router running a Qualcomm EM12 modem placed side by side and on the same mobile operator and identical data plan.
 
 **What doesn't work:**
-- So far everything seems to work for basic functionality. Advanced LTE monitoring/band locking require additional steps as described below. 
+- So far everything seems to work for basic functionality. Advanced LTE monitoring and band selection require additional steps as described below. 
 	- ~_Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._~
 	- 3ginfo status page fails randomly and after being left open and refreshing for a while. Force refreshing several times or logging out of LuCI and logging back in seems to return it to functioning order. I assume either the modem is slow to respond or randmly returns unexpected or garbage data. 
 - Stability improvements remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
+
+**Updates:**
+- 11 days in the router still runs fine, with LTE speeds similar with the other LTE router using the same network side by side.
 
 ![openwrt](images/openwrt.png)
 
 ---
 ## LTE
 
-> [!NOTE]
+> [!IMPORTANT]  
 > The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)) not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect.
+
+> [!NOTE]
+> My modem is running firmware version `16121.1009.00.01.02.13` as installed by the `1.7.0 0.9.1 v0001.0 Build 231122 Rel.61263n_Beta` *beta* firmware. The latest non-beta firmware available at [Tp-Link](https://www.tp-link.com/en/support/download/archer-mr500/#Firmware) reverts the modem firmware to `16121.1009.00.01.02.12`. With other versions your results may vary from mine.
 
 _This initial step is easiest to do with wired WAN connectivity since LTE is not functional yet_
 
@@ -189,8 +195,8 @@ Or do this manually in `/etc/config/network`:
 
 ![wwan0-interface](images/wwan0-eth1.png)
 
-The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I'ave had it configured and working with the official firmware before).  
-To get the existing APN/PDP configuration, the `AT+CGDCONT?` AT command can be used.
+The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I had it configured and working with the this network operator in the official firmware before so that may play a part).  
+To get the existing APN/PDP configuration, the `AT+CGDCONT?` AT command in `picocom /dev/ttyUSB0` can be used.
 
 At this point the mobile connection should be up and running (check if the wwan0 interface receives an IP address from the ISP). This process may take up to several minutes after (re)boot or a modem restart. 
 
@@ -240,7 +246,7 @@ Switch to the **Configuration** tab and set:
 - _Interface_ option to `wwan0`
 - _Port for modem_ to `/dev/ttyUSB0`
 	
-If you choose to enable modem restart after bands change, to ensure successful change, adjust the preset restart command to 
+If you choose to enable modem restart after bands change, to ensure successful change adjust the preset restart command to:
 
 	AT+CFUN=15
 
