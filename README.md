@@ -65,15 +65,15 @@ _My device initially ran operator-specific firmware, hence the (ROORG) labeling.
 > While a `factory` image exists, the MR600 does not have a device page yet so I cannot confirm if it is possible to install OpenWrt directly from the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the answer.
 > If that is already supported, the same `factory` image may or may not work with MR500's OEM web interface to allow for firmware migration - this is something I did not test. 
 
-1. Start a TFTP server - [Tftpd64](https://pjo2.github.io/tftpd64/) will do just fine.
+**1.** Start a TFTP server - [Tftpd64](https://pjo2.github.io/tftpd64/) will do just fine.
 
 Configure the computer's network adapter and the TFTP server to listen on 192.168.0.5/24. Connect to the router using one of the 3 LAN ports.
 
-2. Download the [MR600v2 OpenWrt initramfs (kernel) image](https://firmware-selector.openwrt.org/?version=23.05.5&target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) from the ImageBuilder (either 23.05.x or 24.10.x will do)
+**2.** Download the MR600v2 OpenWrt initramfs (kernel) image from the [OpenWrt Firmware Selector](https://firmware-selector.openwrt.org/?target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) (either 23.05.x or 24.10.x will do)
 
 Place it into the TFTP server's root directory and rename it to `test.bin`
 
-3. Connect to the router's serial console with a USB/UART adapter.
+**3.** Connect to the router's serial console with a USB/UART adapter.
 
 If you want to poke around the Tp-Link firmware first, the login credentials are _admin / 1234_
 
@@ -120,7 +120,7 @@ U-Boot 1.1.3 (Nov 22 2023 - 16:37:42)
 MT7621 #
 ```
 
-4. Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
+**4.** Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
     
     ```
     # tftpboot
@@ -132,7 +132,7 @@ MT7621 #
 
 The router will boot the kernel image and start OpenWrt in _recovery mode_.
 	
-5. With OpenWrt booted in **_recovery (initramfs)_** mode, use the web interface or console to install the `sysupgrade` OpenWrt firmware (which you can also obtain from the ImageBuilder).
+**5.** With OpenWrt booted in **_recovery (initramfs)_** mode, use the web interface or console to install the `sysupgrade` OpenWrt firmware (which you can also obtain from the ImageBuilder).
 
 After another reboot you should find yourself in the permanently installed OpenWrt firmware.
 
@@ -157,9 +157,12 @@ After another reboot you should find yourself in the permanently installed OpenW
 - Stability improvements remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
 
 **Updates:**
-- 11 days in the router still runs fine, with LTE speeds similar with the other LTE router using the same network side by side.
+- 17 days in the router remains online, but carrier aggregation doesn't seem to kick in anymore (similar to what the router does with the official firmware). Restarting the modem with `AT+CFUN=15` restores carrier aggregation and improves speed slightly. 
 
 ![openwrt](images/openwrt.png)
+
+> [!NOTE]
+> My modem is running firmware version `16121.1009.00.01.02.13` as installed by the `1.7.0 0.9.1 v0001.0 Build 231122 Rel.61263n_Beta` *beta* firmware. The latest non-beta firmware available at [Tp-Link](https://www.tp-link.com/en/support/download/archer-mr500/#Firmware) reverts the modem firmware to `16121.1009.00.01.02.12`. With other versions your results may vary from mine.
 
 ---
 ## LTE
@@ -167,10 +170,7 @@ After another reboot you should find yourself in the permanently installed OpenW
 > [!IMPORTANT]  
 > The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)) not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect.
 
-> [!NOTE]
-> My modem is running firmware version `16121.1009.00.01.02.13` as installed by the `1.7.0 0.9.1 v0001.0 Build 231122 Rel.61263n_Beta` *beta* firmware. The latest non-beta firmware available at [Tp-Link](https://www.tp-link.com/en/support/download/archer-mr500/#Firmware) reverts the modem firmware to `16121.1009.00.01.02.12`. With other versions your results may vary from mine.
-
-_This initial step is easiest to do with wired WAN connectivity since LTE is not functional yet_
+_This step is easiest to do with wired WAN connectivity since LTE is not functional yet_
 
 Use the package manager to install
 	
@@ -187,11 +187,11 @@ This will in turn also install the required dependencies:
 	kmod-usb-net-cdc-ncm
 	kmod-usb-net-huawei-cdc-ncm
 	comgt-ncm
-    
+	 
 Reboot the router. After the reboot there is a new network device `eth1` available.
 
-Use LuCI to delete pre-configured `wwan0`.  
-Create a new `wwan0` interface with protocol `DHCP` and attached to the new `eth1` device.  
+Use LuCI to delete or edit the pre-configured `wwan0`.  
+Create a `wwan0` interface with protocol `DHCP` and attached to the new `eth1` device.  
 Or do this manually in `/etc/config/network`:
 
 	config interface 'wwan0'
@@ -200,10 +200,15 @@ Or do this manually in `/etc/config/network`:
 
 ![wwan0-interface](images/wwan0-eth1.png)
 
-The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I had it configured and working with the this network operator in the official firmware before so that may play a part).  
-To get the existing APN/PDP configuration, the `AT+CGDCONT?` AT command in `picocom /dev/ttyUSB0` can be used.
+The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I had it configured and working with this network operator in the official firmware before so that may play a part).  
+To see the existing APN/PDP configuration, the `AT+CGDCONT?` AT command in `picocom /dev/ttyUSB0` can be used.
 
-At this point the mobile connection should be up and running (check if the wwan0 interface receives an IP address from the ISP). This process may take up to several minutes after (re)boot or a modem restart. 
+At this point the mobile connection should be up and running (check if the wwan0 interface receives an IP address from the ISP, usually in the 10.x.x.x range). This process may take up to several minutes after a (re)boot or a modem restart. 
+
+> [!NOTE]
+> If the modem happens to be non-responsive, try the commands suggested in the [4G-AX56 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=502916468e2871f7f19b14b521a10ebf28394006) (which uses the same modem):  
+> `echo -e "AT+GTAUTOCONNECT=1\r\n" > /dev/ttyUSB0`  
+> `echo -e "AT+GTRNDIS=1,1\r\n" > /dev/ttyUSB0`  
 
 ### Advanced LTE
 
@@ -257,7 +262,7 @@ If you choose to enable modem restart after bands change, to ensure successful c
 
 Save and Apply.
 
-You'll notice an error message and lack of information on the **Preferred LTE bands** tab. 
+You'll notice an error message and lack of information on the **Preferred LTE bands** tab.
 
 3. Use SCP or the console to explore the router's filesystem and navigate to `/usr/share/modemband/`.
 
@@ -271,6 +276,16 @@ Complete modem initialization after a band change can take up to several minutes
 
 Probably starting from [this script](https://forum.openwrt.org/t/cellular-signal-level-indicator/60543/15), adapt it to read signal level with AT commands instead of (unavailable) `uqmi`. `3ginfo-lite` should be able to provide the inspiration for this. 
 
-### Actual MR500v1-dedicated OpenWrt build
+### MR500 v1 specific OpenWrt build
 
-I'm aiming to test the router (and modem) stability for about a month of uptime (that's about the maximum connection uptime I've had with the official beta firmwares before connectivity went bust) before putting the extra work in for the next steps.
+I'm aiming to test the router (and modem) stability for about a month of uptime (that's about the maximum connection uptime I've had with the official beta firmwares before connectivity went bust) before putting the extra work in for the next steps.  
+
+> [!TIP]
+> While a dedicated firmware build for MR500v1 would be nice, if you don't care for the incorrect labelling in LuCI you can use the [OpenWrt Firmware Selector](https://firmware-selector.openwrt.org/?target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) right now to build a MR600-based firmware that's usable out-of-the-box (and also after a configuration reset).  
+> Simply select the desired OpenWrt release (from those available), then customize the packages list to include`luci-proto-ncm` (the builder will handle the necessary dependencies). You can remove the two existing _qmi_ packages to same some space.  
+> Then pre-configure the `wwan` network interface using the **first boot (uci-defaults)** script:  
+> `uci set network.wwan0=interface`  
+> `uci set network.wwan0.proto='dhcp'`  
+> `uci set network.wwan0.device='eth1'`  
+> `uci commit network`  
+> Finally build and download the custom `sysupgrade` image and use it to flash the router at the second step.
