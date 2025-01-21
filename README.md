@@ -62,8 +62,8 @@ _My device initially ran operator-specific firmware, hence the (ROORG) labeling.
 
 > [!IMPORTANT]  
 > I have used **only** the serial console method as described in the [MR600 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=78110c3b5fce119d13cd45dadd33ca396c8ce197) to install OpenWrt on the MR500.  
-> While a `factory` image exists, the MR600 does not have a device page yet so I cannot confirm if it is possible to install OpenWrt directly from the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the answer.
-> If that is already supported, the same `factory` image may or may not work with MR500's OEM web interface to allow for firmware migration - this is something I did not test. 
+> While a `factory` image exists, the ~~MR600 does not have a device page yet so I cannot confirm if it is possible to install OpenWrt directly from the Tp-Link web interface~~ [MR600 device page](https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_mr600_v2) links to the initramfs image for factory install, so it is probably not possible to install OpenWrt directly from the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the complete answer.
+> Even if that is already supported, the same `factory` image may or may not work with MR500's OEM web interface to allow for firmware migration. 
 
 **1.** Start a TFTP server - [Tftpd64](https://pjo2.github.io/tftpd64/) will do just fine.
 
@@ -121,14 +121,14 @@ MT7621 #
 ```
 
 **4.** Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
-    
-    ```
-    # tftpboot
-	
-	...transfer happens here...
-	
-    # bootm
-    ```
+
+```    
+# tftpboot
+
+...transfer happens here...
+
+# bootm
+```
 
 The router will boot the kernel image and start OpenWrt in _recovery mode_.
 	
@@ -158,6 +158,7 @@ After another reboot you should find yourself in the permanently installed OpenW
 
 **Updates:**
 - 17 days in the router remains online, but carrier aggregation doesn't seem to kick in anymore (similar to what the router does with the official firmware). Restarting the modem with `AT+CFUN=15` restores carrier aggregation and improves speed slightly. 
+- 25 days in, the router is still online, wwan lost connection and reconnected a couple of times (and reset its uptime) but didn't complete become unresponsive as with the default firmware (yet). Additionally, the 5Ghz signal level appears to be on the low-side with just half the bars on a phone a few meters away in the same room. One oddity is that the modem appears to do some kind of half NAT of its own, with the wwan connection always using a gateway of 10.0.0.1 (which is also a hop in the traffic), which doesn't exist on other routers with the same SIM/ISP. 
 
 ![openwrt](images/openwrt.png)
 
