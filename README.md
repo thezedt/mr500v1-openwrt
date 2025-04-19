@@ -41,7 +41,7 @@ Board photos: [front](photos/PIC_20240106_200401.JPG), [back](photos/PIC_2024010
 
 ### Identification
 
-Since Tp-Link really enjoys versioning out their devices and mix-matching the hardware used in them it's necessary to first identify your device properly.
+Since Tp-Link really enjoys versioning out their devices and mix-matching the hardware used in them, it's necessary to first identify your device properly.
 
 Software signature:
 
@@ -51,19 +51,22 @@ Hardware label:
 
 ![hardware-label](images/hardware-label.jpg)
 
-_My device initially ran operator-specific firmware, hence the (ROORG) labeling._
+_My device came with operator-specific firmware, hence the (ROORG) designation._
 
 ---
 > [!CAUTION]
 > **Don't proceed unless you create full flash backups, are comfortable around flash programmers and/or bricked devices or can easily afford to buy a new router.**
-> **Opening the device to access the serial console will also most likely void your warranty (and definitely break some/all plastic clips)**
+> **Opening the device to access the serial console will also most likely void your warranty (and definitely break some or all plastic clips)**
 
 ## Installation
 
 > [!IMPORTANT]  
-> I have used **only** the serial console method as described in the [MR600 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=78110c3b5fce119d13cd45dadd33ca396c8ce197) to install OpenWrt on the MR500.  
-> While a `factory` image exists, the ~~MR600 does not have a device page yet so I cannot confirm if it is possible to install OpenWrt directly from the Tp-Link web interface~~ [MR600 device page](https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_mr600_v2) links to the initramfs image for factory install, so it is probably not possible to install OpenWrt directly from the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the complete answer.
-> Even if that is already supported, the same `factory` image may or may not work with MR500's OEM web interface to allow for firmware migration. 
+> I have teste **only** the serial console method as described in the [MR600 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=78110c3b5fce119d13cd45dadd33ca396c8ce197) to install OpenWrt on the MR500.
+> While a `factory` image exists, the [MR600 device page](https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_mr600_v2) still links to the initramfs image for factory install, so it is probably not possible to install OpenWrt directly from the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the complete answer.
+> Even if that is already supported, the same `factory` image may or may not work with Tp-Link web interface to allow for firmware migration, and this is a scenario I have not tested.
+
+> [!NOTE]
+> If you want to poke around the Tp-Link firmware first, the login credentials for the serial console are `admin / 1234`.
 
 **1.** Start a TFTP server - [Tftpd64](https://pjo2.github.io/tftpd64/) will do just fine.
 
@@ -75,9 +78,7 @@ Place it into the TFTP server's root directory and rename it to `test.bin`
 
 **3.** Connect to the router's serial console with a USB/UART adapter.
 
-If you want to poke around the Tp-Link firmware first, the login credentials are _admin / 1234_
-
-Attach power and interrupt the U-Boot boot procedure when prompted (type `tpl`).
+Attach power and interrupt the U-Boot boot process by quickly typing `tpl` at the correct moment (see below).
 
 ```
 U-Boot 1.1.3 (Nov 22 2023 - 16:37:42)
@@ -120,7 +121,7 @@ U-Boot 1.1.3 (Nov 22 2023 - 16:37:42)
 MT7621 #
 ```
 
-**4.** Transfer the firmware [via TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
+**4.** Transfer the firmware [through TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
 
 ```    
 # tftpboot
@@ -145,7 +146,7 @@ After another reboot you should find yourself in the permanently installed OpenW
 	- Power, WAN, LAN and WIFI work out-of-the-box. The single WIFI led is attached to the 5Ghz wireless by default, but can be reassigned in LuCI.
 	- The 4G+ led can be configured to indicate WWAN status (but no longer differentiates between 4G and 4G+ connectivity as with the retail firmware).
 	- _The mobile signal leds are a task for another day._
-- Individual signal numbers seem in the correct range, but I have no precise way of confirming them.
+- Individual signal numbers seem in the correct range, but I have no exact method of confirming them.
 - At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version).
 - Carrier aggregation and second band info works ([(1)](images/3ginfo-CA-3&20.png), [(2)](images/3ginfo-CA-7&20.png)) with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
 	- Speeds are on par with another MT7621-based router running a Qualcomm EM12 modem placed side by side and on the same mobile operator and identical data plan.
@@ -158,7 +159,8 @@ After another reboot you should find yourself in the permanently installed OpenW
 
 **Updates:**
 - 17 days in the router remains online, but carrier aggregation doesn't seem to kick in anymore (similar to what the router does with the official firmware). Restarting the modem with `AT+CFUN=15` restores carrier aggregation and improves speed slightly. 
-- 25 days in, the router is still online, wwan lost connection and reconnected a couple of times (and reset its uptime) but didn't complete become unresponsive as with the default firmware (yet). Additionally, the 5Ghz signal level appears to be on the low-side with just half the bars on a phone a few meters away in the same room. One oddity is that the modem appears to do some kind of half NAT of its own, with the wwan connection always using a gateway of 10.0.0.1 (which is also a hop in the traffic), which doesn't exist on other routers with the same SIM/ISP. 
+- 25 days in, the router is still online, wwan lost connection and reconnected a couple of times (and reset its uptime) but didn't completely become unresponsive as with the default firmware (yet). One oddity is that the modem appears to do some kind of half NAT-ing of its own, with the wwan connection always using a gateway of 10.0.0.1 (which also appears as a hop in traffic). This doesn't happen on other routers with the same SIM/ISP. The LTE speed doesn't appear to degrade with uptime, varying mostly depending on time of day and network congestion.
+- 100 days later, the router appears to work fine, although it doesn't have a 100 days uptime due to some power failures (and dataplan expiry). Hoever, it didn't exhibit the failure mode I was experiencing with the OEM firmware (but that may be just due to the beta modem firmware it is running).
 
 ![openwrt](images/openwrt.png)
 
@@ -192,7 +194,7 @@ This will in turn also install the required dependencies:
 Reboot the router. After the reboot there is a new network device `eth1` available.
 
 Use LuCI to delete or edit the pre-configured `wwan0`.  
-Create a `wwan0` interface with protocol `DHCP` and attached to the new `eth1` device.  
+Create/edit the `wwan0` interface with protocol `DHCP` and attach it to the new `eth1` device.
 Or do this manually in `/etc/config/network`:
 
 	config interface 'wwan0'
@@ -231,7 +233,7 @@ Force refresh or logout/login to LuCI and navigate to the **Modem > Information 
 Switch to the **Configuration** tab and set:
 
 - _Interface_ option to `wwan0`
-- _Port for modem_ to `/dev/ttyUSB0
+- _Port for modem_ to `/dev/ttyUSB0`
 
 Save and Apply.
 
@@ -275,18 +277,24 @@ Complete modem initialization after a band change can take up to several minutes
 
 #### Signal level LEDs
 
-Probably starting from [this script](https://forum.openwrt.org/t/cellular-signal-level-indicator/60543/15), adapt it to read signal level with AT commands instead of (unavailable) `uqmi`. `3ginfo-lite` should be able to provide the inspiration for this. 
+Probably starting from [this script](https://forum.openwrt.org/t/cellular-signal-level-indicator/60543/15), it can be adapted to read signal level with AT commands instead of (unavailable) `uqmi`. `3ginfo-lite` should be able to provide the inspiration for this. 
 
-### MR500 v1 specific OpenWrt build
+### MR500v1 dedicated OpenWrt build
 
 I'm aiming to test the router (and modem) stability for about a month of uptime (that's about the maximum connection uptime I've had with the official beta firmwares before connectivity went bust) before putting the extra work in for the next steps.  
 
 > [!TIP]
 > While a dedicated firmware build for MR500v1 would be nice, if you don't care for the incorrect labelling in LuCI you can use the [OpenWrt Firmware Selector](https://firmware-selector.openwrt.org/?target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) right now to build a MR600-based firmware that's usable out-of-the-box (and also after a configuration reset).  
-> Simply select the desired OpenWrt release (from those available), then customize the packages list to include`luci-proto-ncm` (the builder will handle the necessary dependencies). You can remove the two existing _qmi_ packages to same some space.  
+> Simply select the desired OpenWrt release (from those available), then customize the packages list to include `luci-proto-ncm` (the builder will handle the necessary dependencies). You can remove the two existing _qmi_ packages to same some space.
 > Then pre-configure the `wwan` network interface using the **first boot (uci-defaults)** script:  
 > `uci set network.wwan0=interface`  
 > `uci set network.wwan0.proto='dhcp'`  
 > `uci set network.wwan0.device='eth1'`  
 > `uci commit network`  
-> Finally build and download the custom `sysupgrade` image and use it to flash the router at the second step.
+> Finally build and download the custom `sysupgrade` image and use it to flash the router at the second step (or later as an upgrade).
+
+### Failsafe
+
+If you need to boot the MR500 in [failsafe mode](https://openwrt.org/docs/guide-user/troubleshooting/failsafe_and_factory_reset), press the **Reset/WPS** button once or twice while the power led is blinking quickly after power-on. After a few seconds the led should start blinking even faster. 
+
+Plug the network cable into the **LAN1 port** as that is the only one active in failsafe mode and connect to 192.168.1.1 via SSH.
