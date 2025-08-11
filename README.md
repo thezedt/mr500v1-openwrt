@@ -339,6 +339,10 @@ Finally restart the modem to apply changes:
 	
 You can then use the [recovery image](/recovery/mr500v1_recovery_rel42593.bin) I prepared (or make your own) to flash directly from within LuCI (use the force option to bypass metadata check) or using `mtd -r write /tmp/mr500v1_recovery_rel42593.bin firmware` after copying the file over. 
 
+For those who have completely messed up their flash, I have also uploaded a [full flash chip firmware dump](/oem-fw/flash-dump-20250803-retailfw-1.7.0-0.9.1-v0001.0-Build-231122-Rel.61263n_Beta-WORKING-factoryreset-noMACnoIMEI.bin) of an OEM retail release (it's a beta build but can be updated to a newer release). Keep in mind this contains device-specific information so I've censored my MAC address and IMEI in it. 
+Use a hex editor and look for `F0F1F2F3F4F5F6` at address `0xFCF100` and replace that with your MAC, and `001122334455667` at address `0xFCF500` with your IMEI (I'm not sure if the modem actually uses this from the firmware, or it may there just to show it in the administration interface).
+
+
 ## Somewhat of a conclusion
 
 The modem stability seems to have improved either in time (thanks to the firmware update installed by the beta build) or thanks to OpenWrt management, however the random network issues on boot prevent me from using this device in remote locations where access over its LTE link is needed for management.  
