@@ -61,9 +61,9 @@ _My device came with operator-specific firmware, hence the (ROORG) designation._
 ## Installation
 
 > [!IMPORTANT]  
-> I have teste **only** the serial console method as described in the [MR600 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=78110c3b5fce119d13cd45dadd33ca396c8ce197) to install OpenWrt on the MR500.
+> I have tested **only** the serial console method as described in the [MR600 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=78110c3b5fce119d13cd45dadd33ca396c8ce197) to install OpenWrt on the MR500.
 > While a `factory` image exists, the [MR600 device page](https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_mr600_v2) still links to the initramfs image for factory install, so it is probably not possible to install OpenWrt directly from the Tp-Link web interface. Perhaps [this discussion](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489?page=5) holds the complete answer.
-> Even if that is already supported, the same `factory` image may or may not work with Tp-Link web interface to allow for firmware migration, and this is a scenario I have not tested.
+> Even if that is already supported, the same `factory` image may or may not work with the MR500 web interface to allow for firmware migration, and this is a scenario I have not tested.
 
 > [!NOTE]
 > If you want to poke around the Tp-Link firmware first, the login credentials for the serial console are `admin / 1234`.
