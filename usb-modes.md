@@ -1,4 +1,4 @@
-By default the Fibocom FG621-EA in the Tp-Link MR500v1(EU) is configured to work in NCM mode (Fibocom-designated mode 36).
+By default the Fibocom FG621-EA in the Tp-Link MR500v1(EU) is configured to work in RNDIS mode (Fibocom-designated mode 38). For best use with OpenWrt it should be switched to NCM Mode (36). 
 
 	root@OpenWrt:/# picocom /dev/ttyUSB0
 	picocom v3.1
@@ -31,7 +31,7 @@ By default the Fibocom FG621-EA in the Tp-Link MR500v1(EU) is configured to work
 	OK
 
 	AT+GTUSBMODE?
-	+GTUSBMODE: 36
+	+GTUSBMODE: 38
 
 	OK
 

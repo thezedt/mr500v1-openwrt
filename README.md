@@ -78,7 +78,7 @@ Place it into the TFTP server's root directory and rename it to `test.bin`
 
 **3.** Connect to the router's serial console with a USB/UART adapter.
 
-Attach power and interrupt the U-Boot boot process by quickly typing `tpl` at the correct moment (see below).
+Attach power and interrupt the U-Boot boot process by quickly pressing `4` or typing `tpl` at the correct moment (see below).
 
 ```
 U-Boot 1.1.3 (Nov 22 2023 - 16:37:42)
@@ -113,13 +113,20 @@ dcache: sets:256, ways:4, linesz:32 ,total:32768
 #Reset_MT7530
 set LAN/WAN WLLLL                                                             
 
-				 <--- around here type 'tpl' quickly
+				 <--- around here press 4 or type 'tpl' quickly
 
 4: System Enter Boot Command Line Interface.
 
 U-Boot 1.1.3 (Nov 22 2023 - 16:37:42)
 MT7621 #
 ```
+
+The default U-Boot menu is hidden (and quickly bypassed) but still partially available by pressing the corresponding number keys at the proper time:
+
+	1: System Load Linux to SDRAM via TFTP.
+	2: System Load Linux Kernel then write to Flash via TFTP.
+	3: System Boot system code via Flash.
+	4: System Enter Boot Command Line Interface. <--- triggered by the 'tpl' prompt
 
 **4.** Transfer the firmware [through TFTP](logs/tftp-flash-log.txt) and then instruct U-Boot to boot OpenWrt from ram:
 
@@ -158,29 +165,37 @@ After another reboot you should find yourself in the permanently installed OpenW
 - Stability improvements remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
 
 **Updates:**
-- 17 days in the router remains online, but carrier aggregation doesn't seem to kick in anymore (similar to what the router does with the official firmware). Restarting the modem with `AT+CFUN=15` restores carrier aggregation and improves speed slightly. 
+- 17 days in, the router remains online, but carrier aggregation doesn't seem to kick in anymore (similar to what the router does with the official firmware). Restarting the modem with `AT+CFUN=15` restores carrier aggregation and improves speed slightly. 
 - 25 days in, the router is still online, wwan lost connection and reconnected a couple of times (and reset its uptime) but didn't completely become unresponsive as with the default firmware (yet). One oddity is that the modem appears to do some kind of half NAT-ing of its own, with the wwan connection always using a gateway of 10.0.0.1 (which also appears as a hop in traffic). This doesn't happen on other routers with the same SIM/ISP. The LTE speed doesn't appear to degrade with uptime, varying mostly depending on time of day and network congestion.
-- 100 days later, the router appears to work fine, although it doesn't have a 100 days uptime due to some power failures (and dataplan expiry). Hoever, it didn't exhibit the failure mode I was experiencing with the OEM firmware (but that may be just due to the beta modem firmware it is running).
-- _Later note_: Somehow I managed to lose the content of my device's "radio" mtd7 partition (and what else?), which resulted in low performance for 2.4Ghz and very low power (barely usable) for 5GHz. I haven't noticed this until I actually tried  to use the wirelesses while on decent LTE coverage. Restoring the "radio" partition with [this binary](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/139) restored full signal and speed for both radios (I was too lazy to extract the device's original radio data from the full flash backup dump. I might still do that at some later date).
+- 100 days later, the router appears to work fine, although it doesn't have a 100 days uptime due to some power failures (and dataplan expiry). However, it didn't exhibit the failure mode I was experiencing with the OEM firmware (but that may be just due to the beta modem firmware it is running).
+- _Later note_: ~Somehow I managed to lose the content of my device's mtd7 "radio" partition (and what else?)~ The OpenWrt build for MR600 [uses the wrong offset for the `radio` (mtd7) partition](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/207) and this applies to MR500 as well, which results in low performance for 2.4Ghz and very low power (barely usable) for 5GHz. I haven't noticed this until I actually tried  to use the wirelesses while on decent LTE coverage. Restoring the "radio" partition with [this binary](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/139) restored full signal and speed for both radios (I was too lazy to extract the device's original radio data from the full flash backup dump. I might still do that at some later date).
+- _Aproximately 6 months later_: The modem seems ot run fine with 2 of the 3 operators available in the area. One of the working operators does not provide Carrier Aggregation (4G+), while the other does (the one I also used for testing the OEM firmware). The modem eventually lost connection and required a reboot with a third operator (that also supports CA/4G+). 
+- _Aproximately 8 months later_: The router started [randomly freezing on boot](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/188) on power failures and on cold boots. Investigating the serial console shows that it does complete the boot but the network subsystem is completely non-functional (link status messages are displayed in the console but running `ifconfig` or `service network restart` results in multiple _Command failed: Request timed out_ errors and no resolve). Additionally, at the times when it does boot fine it eventually starts experiencing out-of-memory errors (with various services on it getting killed by the kernel) and finally soft reboots. The memory crashes appear resolved after a clean update to OpenWrt 24.10.2. The random broken network on cold boot persists with 24.10.2.
+
 
 ![openwrt](images/openwrt.png)
 
 > [!NOTE]
-> My modem is running firmware version `16121.1009.00.01.02.13` as installed by the `1.7.0 0.9.1 v0001.0 Build 231122 Rel.61263n_Beta` *beta* firmware. The latest non-beta firmware available at [Tp-Link](https://www.tp-link.com/en/support/download/archer-mr500/#Firmware) reverts the modem firmware to `16121.1009.00.01.02.12`. With other versions your results may vary from mine.
+> I've kept the modem running firmware version `16121.1009.00.01.02.13` as installed by the `1.7.0 0.9.1 v0001.0 Build 231122 Rel.61263n_Beta` *beta* firmware. The latest non-beta firmware available at [Tp-Link](https://www.tp-link.com/en/support/download/archer-mr500/#Firmware) reverts the modem firmware to `16121.1009.00.01.02.12`. With other versions your results may vary from mine.  
+> Release `1.10.0 0.9.1 241219 Rel.42593` appears to update the modem firmware to version `16121.1009.00.01.02.16`.
 
 ---
 ## LTE
 
 > [!IMPORTANT]  
-> The Fibocom FG621 modem runs in NCM mode (internally [mode 36](usb-modes.md)) not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect.
+> The Fibocom FG621 modem runs in [RNDIS mode](https://openwrt.org/docs/guide-user/network/wan/wwan/ethernetoverusb_rndis) (internally [mode 38](usb-modes.md)) not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect. While RNDIS is usable with OpenWrt, for best results the modem should be switched to [NCM mode (mode 36)](usb-modes.md).
 
 _This step is easiest to do with wired WAN connectivity since LTE is not functional yet_
 
-Use the package manager to install
+For RNDIS mode use the package manager to install
+
+	kmod-usb-net-rndis
+
+For NCM mode install
 	
     luci-proto-ncm
 	
-This will in turn also install the required dependencies:
+Which will in turn also install the required dependencies:
 
 	chat
 	comgt
@@ -192,15 +207,17 @@ This will in turn also install the required dependencies:
 	kmod-usb-net-huawei-cdc-ncm
 	comgt-ncm
 	 
-Reboot the router. After the reboot there is a new network device `eth1` available.
+Reboot the router. After the reboot there is a new network device `eth1` or `usb0` (NCM / RNDIS) available.
 
 Use LuCI to delete or edit the pre-configured `wwan0`.  
-Create/edit the `wwan0` interface with protocol `DHCP` and attach it to the new `eth1` device.
+Create/edit the `wwan0` interface with protocol `DHCP` and attach it to the new `eth1` / `usb0` device.
 Or do this manually in `/etc/config/network`:
 
 	config interface 'wwan0'
 		option proto 'dhcp'
 		option device 'eth1'
+		
+With RNDIS mode the device should be `usb0` instead.
 
 ![wwan0-interface](images/wwan0-eth1.png)
 
@@ -280,7 +297,7 @@ Complete modem initialization after a band change can take up to several minutes
 
 Probably starting from [this script](https://forum.openwrt.org/t/cellular-signal-level-indicator/60543/15), it can be adapted to read signal level with AT commands instead of (unavailable) `uqmi`. `3ginfo-lite` should be able to provide the inspiration for this. 
 
-### MR500v1 dedicated OpenWrt build
+## MR500v1 dedicated OpenWrt build
 
 I'm aiming to test the router (and modem) stability for about a month of uptime (that's about the maximum connection uptime I've had with the official beta firmwares before connectivity went bust) before putting the extra work in for the next steps.  
 
@@ -294,8 +311,35 @@ I'm aiming to test the router (and modem) stability for about a month of uptime 
 > `uci commit network`  
 > Finally build and download the custom `sysupgrade` image and use it to flash the router at the second step (or later as an upgrade).
 
-### Failsafe
+## Failsafe
 
 If you need to boot the MR500 in [failsafe mode](https://openwrt.org/docs/guide-user/troubleshooting/failsafe_and_factory_reset), press the **Reset/WPS** button once or twice while the power led is blinking quickly after power-on. After a few seconds the led should start blinking even faster. 
 
 Plug the network cable into the **LAN1 port** as that is the only one active in failsafe mode and connect to 192.168.1.1 via SSH.
+
+## Reverting to OEM firmware
+
+If you ever want to revert back to the Tp-Link firmware, reset the modem mode back to RNDIS and disable autoconnect beforehand:
+	
+	AT+GTAUTOCONNECT=0
+	
+	AT+GTRNDIS=0
+	
+	AT+GTUSBMODE=38
+
+If you have perhaps enabled IP (by)pass to prevent double NAT under OpenWrt (like me), remember to also undo that. Check status and reset to `0` (default) if necessary:
+	
+	AT+GTIPPASS?
+	
+	AT+GTIPPASS=0
+
+Finally restart the modem to apply changes:
+
+	AT+CFUN=15
+	
+You can then use the [recovery image](/recovery/mr500v1_recovery_rel42593.bin) I prepared (or make your own) to flash directly from within LuCI (use the force option to bypass metadata check) or using `mtd -r write /tmp/mr500v1_recovery_rel42593.bin firmware` after copying the file over. 
+
+## Somewhat of a conclusion
+
+The modem stability seems to have improved either in time (thanks to the firmware update installed by the beta build) or thanks to OpenWrt management, however the random network issues on boot prevent me from using this device in remote locations where access over its LTE link is needed for management.  
+So for now I have decided to revert back to the OEM firmware (which has received two new releases in the meantime, including one that changes the modem firmware - perhaps also resolving/improving the LTE stability) and plan to use this router as one of several uplinks for a more stable OpenWrt device that I can remote into using the (still functional) uplinks.
