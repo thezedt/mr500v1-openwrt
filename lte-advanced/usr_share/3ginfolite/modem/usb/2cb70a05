@@ -1,5 +1,6 @@
 # Fibocom modems with ProdID=0a05
 # FG621-EA in NCM mode (LTE CAT6)
+# derrived from 2cb70105
 
 O=$(sms_tool -d $DEVICE at "AT+GTCCINFO?;+GTCAINFO?")
 
@@ -26,7 +27,7 @@ if [ "x$MODE" = "xLTE" ]; then
 		fi
 		T=$(echo "$T1" | awk -F, '{print $9}')
 		if [ -n "$T" ]; then
-			#T=$((T - 100)) # for lte the primary band number is reported directly
+			#T=$((T - 100)) # the primary band number is reported directly
 			MODE="$MODE | $(band4g $T)"
 			PBAND="$(band4g $T "")"
 		fi
@@ -82,6 +83,11 @@ IFS="
 			"4") S4BAND="$T2";;
 			*);;
 			esac
+			
+		fi
+					
+		T=$(echo "$LINE" | awk -F[:,] '/^SCC'$IDX':2,./{print $5}')
+		if [ -n "$T" ]; then
 
 			case $IDX in
 			"1") S1PCI="$T";;
@@ -93,7 +99,7 @@ IFS="
 
 		fi
 		
-		T=$(echo "$LINE" | awk -F[:,] '/^SCC'$IDX': 2,./{print $6}')
+		T=$(echo "$LINE" | awk -F[:,] '/^SCC'$IDX':2,./{print $6}')
 		if [ -n "$T" ]; then
 
 			case $IDX in
@@ -159,18 +165,23 @@ case $NETDRV in
 		PROTO="MBIM";;
 	"cdc_ether")
 		 PROTO="ECM";;
+	"cdc_ncm")
+		 PROTO="NCM";;
 esac
 
 
-#PV=$(cat /sys/kernel/debug/usb/devices 2>/dev/null)
-#PVCUT=$(echo $PV | awk -F 'Vendor=2cb7 ProdID=0a05' '{print $2}' | cut -c-1290)
-#if echo "$PVCUT" | grep -q "Driver=qmi_wwan"
-#then
-#    PROTO="qmi"
-#elif echo "$PVCUT" | grep -q "Driver=cdc_mbim"
-#then
-#    PROTO="mbim"
-#elif echo "$PVCUT" | grep -q "Driver=cdc_ether"
-#then
-#    PROTO="ecm"
-#fi
+PV=$(cat /sys/kernel/debug/usb/devices 2>/dev/null)
+PVCUT=$(echo $PV | awk -F 'Vendor=2cb7 ProdID=0a05' '{print $2}' | cut -c-1290)
+if echo "$PVCUT" | grep -q "Driver=qmi_wwan"
+then
+    PROTO="qmi"
+elif echo "$PVCUT" | grep -q "Driver=cdc_mbim"
+then
+    PROTO="mbim"
+elif echo "$PVCUT" | grep -q "Driver=cdc_ether"
+then
+    PROTO="ecm"
+elif echo "$PVCUT" | grep -q "Driver=cdc_ncm"
+then
+    PROTO="ncm"
+fi

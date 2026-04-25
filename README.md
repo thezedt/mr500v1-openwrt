@@ -180,6 +180,7 @@ After another reboot you should find yourself in the permanently installed OpenW
 	- ~_Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._~
 	- 3ginfo status page fails randomly and after being left open and refreshing for a while. Force refreshing several times or logging out of LuCI and logging back in seems to return it to functioning order. I assume either the modem is slow to respond or randomly returns unexpected or garbage data. 
 - Stability improvements remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
+- As of April 2026 the [wrong offset for the `radio` (mtd7) partition](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/207) affecting both MR500 and the original MR600 hasn't been fixed. After flashing OpenWrt on these devices for the first time it will try to use wireless calibration data from the wrong location, which results in low performance for 2.4Ghz and very low power (barely usable) for 5GHz. Restoring the (wrong) "radio" partition with [this binary](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/139) (or my [local copy](tested-openwrt-builds/mtd7-radio-patch-TESTEDGOOD.bin)) fixes this. The router's original radio data (at the different location) remains intact for when OpenWrt will correct the offset and for returning to the TP-Link OEM firmware.  
 
 **Updates:**
 
@@ -222,16 +223,14 @@ Which will in turn also install the required dependencies:
 Reboot the router. After the reboot there is a new network device `eth1` or `usb0` (NCM / RNDIS) available.
 
 Use LuCI to delete or edit the pre-configured `wwan0`.  
-Create/edit the `wwan0` interface with protocol `DHCP` and attach it to the new `eth1` / `usb0` device.
+Create/edit the `wwan0` interface with protocol `DHCP` and attach it to the new `usb0` or the legacy `eth1` (on older OpenWrt) device.
 Or do this manually in `/etc/config/network`:
 
 	config interface 'wwan0'
 		option proto 'dhcp'
-		option device 'eth1'
+		option device 'usb0'
 		
-With RNDIS mode the device should be `usb0` instead.
-
-![wwan0-interface](images/wwan0-eth1.png)
+![wwan0-interface](images/wwan0-usb0.png)
 
 The modem should automatically work out the required APN from the SIM/network (at least it did for me - but I had it configured and working with this network operator in the official firmware before so that may play a part).  
 To see the existing APN/PDP configuration, the `AT+CGDCONT?` AT command in `picocom /dev/ttyUSB0` can be used.
@@ -239,25 +238,27 @@ To see the existing APN/PDP configuration, the `AT+CGDCONT?` AT command in `pico
 At this point the mobile connection should be up and running (check if the wwan0 interface receives an IP address from the ISP, usually in the 10.x.x.x range). This process may take up to several minutes after a (re)boot or a modem restart. 
 
 > [!NOTE]
-> If the modem happens to be non-responsive, try the commands suggested in the [4G-AX56 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=502916468e2871f7f19b14b521a10ebf28394006) (which uses the same modem):  
+> If the `wwan0` interface generates traffic and looks fine but receives no IP address, use the commands suggested in the [4G-AX56 commit message](https://git.openwrt.org/?p=openwrt/openwrt.git;a=commitdiff;h=502916468e2871f7f19b14b521a10ebf28394006) (has the same modem) to enable modem auto-dial:  
 > `echo -e "AT+GTAUTOCONNECT=1\r\n" > /dev/ttyUSB0`  
 > `echo -e "AT+GTRNDIS=1,1\r\n" > /dev/ttyUSB0`  
 
 ### Advanced LTE
 
 For signal monitoring and band selection/locking **4IceG**'s awesome [luci-app-3ginfo-lite](https://github.com/4IceG/luci-app-3ginfo-lite) and [luci-app-modemband](https://github.com/4IceG/luci-app-3ginfo-lite) will do miracles.  
-However, the Fibocom modem is not supported in the current (as of December 2024) builds and will require a bit of manual tinkering. 
+However, the Fibocom modem is not supported in the current builds (as of April 2026) and will require some of manual tinkering. 
 
 The install processes for both are best described in their respective repos, but for convenience I have included the versions I successfully tested and modded in the [`lte-advanced/`](lte-advanced/) folder on this repo (in the appropriately numbered order).
 Download and use random files off the internet at your discretion.
 
-In the same folder are also the necessary tweaked and new files that are required for modem support.
+In the same folder are also the necessary changed and new files that are required for modem support.
+
+On this modem `/dev/ttyUSB0` is the AT commands interface.
 
 #### 3ginfo-lite
 
-1. Install the appropriate architecture `sms-tool` ipk.
+1. Install the appropriate architecture `sms-tool` package.
 
-2. Install `luci-app-3ginfo-lite` ipk. 
+2. Install `luci-app-3ginfo-lite` package. 
 
 Force refresh or logout/login to LuCI and navigate to the **Modem > Information ...** submenu.  
 Switch to the **Configuration** tab and set:
@@ -267,15 +268,15 @@ Switch to the **Configuration** tab and set:
 
 Save and Apply.
 
-You'll notice there is still no information on the **Details** tab. 
+You'll notice there is still no information on the **Details** tab (or even a message about a missing modem at the top of the screen). 
 
-3. Patch `/usr/share/3ginfo-lite/3ginfo.sh` using SCP or the console according to [these changes](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-bfb9df31e7c9175e9d10b5dca27891b6c20b9997ed0df263b257f34796d5067a).
+3. Patch `/usr/share/3ginfo-lite/3ginfo.sh` with [these changes](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-bfb9df31e7c9175e9d10b5dca27891b6c20b9997ed0df263b257f34796d5067a).
 
-4. Inside the `/usr/share/3ginfo-lite/modem/` subfolder create a new file called **`2cb70a05`** (the VID/PID of the modem) with [this content](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-81e9e3e254e33b574ed506eb3df71e979e8ca6c33126616a4eecc5c9050dbe60).
+4. Inside the `/usr/share/3ginfo-lite/modem/` subfolder create a new file **`2cb70a05`** (the VID/PID of the modem) with [this content](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-81e9e3e254e33b574ed506eb3df71e979e8ca6c33126616a4eecc5c9050dbe60).
 
-Or from the console with internet access (through the wired WAN) run:
+Or from the console run:
 
-	wget -O /usr/share/3ginfolite/modem/usb/2cb70a05 https://raw.githubusercontent.com/thezedt/mr500v1-openwrt/refs/heads/main/lte-advanced/usr_share/3ginfolite/modem/usb/2cb70a05
+	wget -O /usr/share/3ginfo-lite/modem/usb/2cb70a05 https://raw.githubusercontent.com/thezedt/mr500v1-openwrt/refs/heads/main/lte-advanced/usr_share/3ginfolite/modem/usb/2cb70a05
 
 Once both files are edited/created successfully, the details should finally be displayed in LuCI (after a while or a refresh).
 
@@ -303,7 +304,7 @@ You'll notice an error message and lack of information on the **Preferred LTE ba
 
 3. Use SCP or the console to explore the router's filesystem and navigate to `/usr/share/modemband/`. Inside create a new file called **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/modemband/2cb70a05).
 
-Or from the console with internet access (through the wired WAN) run:
+Or from the console run:
 
 	wget -O /usr/share/modemband/2cb70a05 https://raw.githubusercontent.com/thezedt/mr500v1-openwrt/refs/heads/main/lte-advanced/usr_share/modemband/2cb70a05
 
@@ -313,27 +314,46 @@ Complete modem initialization after a band change can take up to several minutes
 
 #### Signal level LEDs
 
-Probably starting from [this script](https://forum.openwrt.org/t/cellular-signal-level-indicator/60543/15), it can be adapted to read signal level with AT commands instead of (unavailable) `uqmi`. `3ginfo-lite` should be able to provide the inspiration for this. 
+~Probably starting from [this script](https://forum.openwrt.org/t/cellular-signal-level-indicator/60543/15), it can be adapted to read signal level with AT commands instead of (unavailable) `uqmi`. `3ginfo-lite` should be able to provide the inspiration for this.~
+
+The [defaults script](helper-scripts/defaults.sh) detailed below creates the necessary [LED handling](helper-scripts/signal-leds.sh) and [gcom helper](helper-scripts/signal-info.gcom) scripts and cron job that update signal and 4G+ LEDs according to current conditions.
 
 ## MR500v1 dedicated OpenWrt build
 
-I'm aiming to test the router (and modem) stability for about a month of uptime (that's about the maximum connection uptime I've had with the official beta firmwares before connectivity went bust) before putting the extra work in for the next steps.  
-
 > [!TIP]
-> While a dedicated firmware build for MR500v1 would be nice, if you don't care for the incorrect labelling in LuCI you can use the [OpenWrt Firmware Selector](https://firmware-selector.openwrt.org/?target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) right now to build a MR600-based firmware that's usable out-of-the-box (and also after a configuration reset).  
-> Simply select the desired OpenWrt release (from those available), then customize the packages list to include `luci-proto-ncm` (the builder will handle the necessary dependencies). You can remove the two existing _qmi_ packages to same some space.
-> Then pre-configure the `wwan` network interface using the **first boot (uci-defaults)** script:  
-> `uci set network.wwan0=interface`  
-> `uci set network.wwan0.proto='dhcp'`  
-> `uci set network.wwan0.device='eth1'`  
-> `uci commit network`  
-> Finally build and download the custom `sysupgrade` image and use it to flash the router at the second step (or later as an upgrade).
+> It is possible to build an (almost) preconfigured **sysupgrade** image for MR500v1 by customizing the *packages list* and *startup script* on the [OpenWrt Firmware Selector](https://firmware-selector.openwrt.org/?target=ramips%2Fmt7621&id=tplink_mr600-v2-eu) with the MR600v2 image.
+
+Customize the packages list to:
+
+> apk-mbedtls base-files ca-bundle dnsmasq dropbear firewall4 fstools kmod-crypto-hw-eip93 kmod-gpio-button-hotplug kmod-leds-gpio kmod-nft-offload libc libgcc libustream-mbedtls logd mtd netifd nftables odhcp6c odhcpd-ipv6only ppp ppp-mod-pppoe procd-ujail uboot-envtools uci uclient-fetch urandom-seed urngd wpad-basic-mbedtls kmod-mt7603 kmod-mt7615e kmod-mt7663-firmware-ap kmod-usb3 -uboot-envtools luci **kmod-usb-serial-option kmod-usb-net-cdc-ncm luci-proto-ncm comgt comgt-ncm**
+
+Packages marked in bold are the extra needed ones. Remove the two preset `qmi`-related packages to save some flash space for future use.
+
+Use the **first boot (uci-defaults)** script below for minimal interface configuration:
+
+	uci set network.wwan0=interface
+	uci set network.wwan0.proto='dhcp'
+	uci set network.wwan0.device='usb0'
+	uci commit network
+
+Or use the **[advanced uci-defaults script](helper-scripts/defaults.sh)** for advanced pre-configuration of a sysupgrade image that:
+* tweaks the device name and default hostname to _TL-MR500v1_
+* configures the correct interface for the modem's WWAN
+* configures wireless SSIDs and enables (password-less!) wireless functionality 
+* configures interface LEDs
+* adds helper script and cron job to handle the extra 4G+ and signal LEDs functionality
+
+Download the custom generated `sysupgrade` image and use it to flash the router at the second step (or later as an upgrade). The builder does not gneerate a custom kernel image so you'll need to rely on the default MR600 kernel image for the initial TFTP boot. 
 
 ## Failsafe
 
 If you need to boot the MR500 in [failsafe mode](https://openwrt.org/docs/guide-user/troubleshooting/failsafe_and_factory_reset), press the **Reset/WPS** button once or twice while the power led is blinking quickly after power-on. After a few seconds the led should start blinking even faster. 
 
 Plug the network cable into the **LAN1 port** as that is the only one active in failsafe mode and connect to 192.168.1.1 via SSH.
+
+## TFTP Recovery
+
+My device (supplied with custom ISP firmware) doesn't appear to support TFTP recovery by pressing any of the buttons (WPS/Reset or Wifi On/Off) at power-on.
 
 ## Reverting to OEM firmware
 
@@ -355,7 +375,7 @@ Finally restart the modem to apply changes:
 
 	AT+CFUN=15
 	
-You can then use the [recovery image](/recovery/mr500v1_recovery_rel42593.bin) I prepared (or make your own) to flash directly from within LuCI (use the force option to bypass metadata check) or using `mtd -r write /tmp/mr500v1_recovery_rel42593.bin firmware` after copying the file over. 
+You can then use the [recovery image](/recovery/mr500v1_recovery_rel42593.bin) I prepared (or [make your own](revert.md)) to flash directly from within LuCI (use the force option to bypass metadata check) or using `mtd -r write /tmp/mr500v1_recovery_rel42593.bin firmware` after copying the file over. 
 
 For those who have completely messed up their flash, I have also uploaded a [full flash chip firmware dump](/oem-fw/flash-dump-20250803-retailfw-1.7.0-0.9.1-v0001.0-Build-231122-Rel.61263n_Beta-WORKING-factoryreset-noMACnoIMEI.bin) of an OEM retail release (it's an older beta build that can be updated to a newer release). Keep in mind this contains device-specific information so I've removed my MAC address and IMEI in it. 
 Use a hex editor and look for `F0F1F2F3F4F5F6` at address `0xFCF100` and replace that with your MAC, and `001122334455667` at address `0xFCF500` with your IMEI (this is most likely used just for displaying in the administration interface).
@@ -367,7 +387,7 @@ Use a hex editor and look for `F0F1F2F3F4F5F6` at address `0xFCF100` and replace
 - 100 days later, the router appears to work fine, although it doesn't have a 100 days uptime due to some power failures (and dataplan expiry). However, it didn't exhibit the failure mode I was experiencing with the OEM firmware (but that may be just due to the beta modem firmware it is running).
 - _Later note_: ~Somehow I managed to lose the content of my device's mtd7 "radio" partition (and what else?)~ The OpenWrt build for MR600 [uses the wrong offset for the `radio` (mtd7) partition](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/207) and this applies to MR500 as well, which results in low performance for 2.4Ghz and very low power (barely usable) for 5GHz. I haven't noticed this until I actually tried  to use the wirelesses while on decent LTE coverage. Restoring the "radio" partition with [this binary](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/139) restored full signal and speed for both radios (I was too lazy to extract the device's original radio data from the full flash backup dump. I might still do that at some later date).
 - _Aproximately 6 months later_: The modem seems ot run fine with 2 of the 3 operators available in the area. One of the working operators does not provide Carrier Aggregation (4G+), while the other does (the one I also used for testing the OEM firmware). The modem eventually lost connection and required a reboot with a third operator (that also supports CA/4G+). 
-- _Aproximately 8 months later_: The router started [randomly freezing on boot](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/187) on power failures / cold boots. Investigating the serial console shows that it does complete the boot but the network subsystem is completely non-functional. Link status messages are displayed in the console but running `ifconfig` or `service network restart` results in multiple _Command failed: Request timed out_ errors and no result. ~Additionally, at the times when it does boot fine it eventually starts experiencing out-of-memory errors (with various services on it getting killed by the kernel) and finally soft reboots.~ The memory crashes appear resolved after a clean update to OpenWrt 24.10.2. The random broken network on cold boot persists with 24.10.2.
-
+- _Aproximately 8 months later_: The router started [randomly freezing on boot](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/187) on power failures / cold boots. Investigating the serial console shows that it does complete the boot but the network subsystem is completely non-functional. Link status messages are displayed in the console but running `ifconfig` or `service network restart` results in multiple _Command failed: Request timed out_ errors and no result. ~Additionally, at the times when it does boot fine it eventually starts experiencing out-of-memory errors (with various services on it getting killed by the kernel) and finally soft reboots.~ The memory crashes appear resolved after a clean update to OpenWrt 24.10.2. The random broken network on cold boot persists with 24.10.2.  
 The modem stability seems to have improved either in time (thanks to the firmware update installed by the beta build) or thanks to OpenWrt management, however the random network issues on boot prevent me from using this device in remote locations where access over its LTE link is needed for management.  
-So for now I have decided to revert back to the OEM firmware (which has received two new releases in the meantime, including one that changes the modem firmware - perhaps also resolving/improving the LTE stability) and plan to use this router as one of several uplinks for a more stable OpenWrt device that I can remote into using the (still functional) uplinks.
+So for now I have decided to revert back to the OEM firmware (which has received two new releases in the meantime, including one that changes the modem firmware - perhaps also resolving/improving the LTE stability) and plan to use this router as one of several uplinks for a more stable OpenWrt device that I can remote into using the (still functional) uplinks.  
+- _Over 1 year later_: I'm giving it another go with the current (25.12.2) OpenWrt release - so far none of the previously experienced issues returned. 

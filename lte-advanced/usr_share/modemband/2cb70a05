@@ -1,3 +1,6 @@
+# Fibocom FG621-EA
+# Based on _fibocom_fm350_common with 5G portions removed
+
 _DEVICE=/dev/ttyUSB0
 
 getinfo() {
