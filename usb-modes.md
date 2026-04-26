@@ -73,6 +73,6 @@ Before making changes, write down the current mode value and check if the desire
 
 ![os-support](images/fibocom-modes-5-os.png)
 
-I have not personally tested mode switching on this specific modem. This information is saved here for reference only. 
+I have only tested modes 36 and 38 on this specific modem. This information is saved here for reference only. 
 
 Source: [(1)](https://blog.csdn.net/bailiqiuyu/article/details/124489444)

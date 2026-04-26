@@ -172,19 +172,16 @@ After another reboot you should find yourself in the permanently installed OpenW
 	- _The mobile signal leds are a task for another day._
 - Individual signal numbers seem in the correct range, but I have no exact method of confirming them.
 - At least some of the LTE status info is confirmed correct (Operator, MCC, NMC, Cell ID, Primary band, Modem firmware model and version).
-- Carrier aggregation and second band info works ([(1)](images/3ginfo-CA-3&20.png), [(2)](images/3ginfo-CA-7&20.png)) with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
-	- Speeds are on par with another MT7621-based router running a Qualcomm EM12 modem placed side by side and on the same mobile operator and identical data plan.
+- Carrier aggregation and second band info works ([(1)](images/3ginfo-CA-3&20.png), [(2)](images/3ginfo-CA-7&20.png) [(3)](images/3ginfo-CA-1&7.png)) with the patched [3ginfolite script](lte-advanced/usr_share/3ginfolite/3ginfo.sh). 
+	- Speeds are on par with another MT7621-based router running a Qualcomm EM12 modem placed side by side and on the same mobile operators and identical data plans and similar to mobile phones tested in the same location.
 
 **What doesn't work:**
 - So far everything seems to work for basic functionality. Advanced LTE monitoring and band selection require additional steps as described below. 
 	- ~_Secondary band functionality and reporting need to be tested with a CA-capable SIM/operator._~
-	- 3ginfo status page fails randomly and after being left open and refreshing for a while. Force refreshing several times or logging out of LuCI and logging back in seems to return it to functioning order. I assume either the modem is slow to respond or randomly returns unexpected or garbage data. 
-- Stability improvements remain to be tested... Watchcat can easily handle the modem restarts if it misbehaves like with the official firmware. 
-- As of April 2026 the [wrong offset for the `radio` (mtd7) partition](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/207) affecting both MR500 and the original MR600 hasn't been fixed. After flashing OpenWrt on these devices for the first time it will try to use wireless calibration data from the wrong location, which results in low performance for 2.4Ghz and very low power (barely usable) for 5GHz. Restoring the (wrong) "radio" partition with [this binary](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/139) (or my [local copy](tested-openwrt-builds/mtd7-radio-patch-TESTEDGOOD.bin)) fixes this. The router's original radio data (at the different location) remains intact for when OpenWrt will correct the offset and for returning to the TP-Link OEM firmware.  
-
-**Updates:**
-
-*See [conclusion(s)](#somewhat-of-a-conclusion) at the end.*  
+	- 3ginfo status page can fail randomly if being left open and refreshing for a while. Force refreshing or logging out of LuCI and logging back in seems to return it to functioning order. I assume either the modem is slow to respond or randomly returns unexpected or garbage data. The status page will be empty or garbled if 3ginfo data collection overlaps the LEDs status script (provided below). 
+- Stability improvements remain to be tested... Watchcat can handle the modem restarts if it misbehaves like with the official firmware. 
+- With some OpenWrt releases (24.x ?) the router may experience [random freeze on boot](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/187) after power failures / cold boots. Investigating the serial console shows that it does complete the boot but the network subsystem is completely non-functional. Link status messages are displayed in the console but running `ifconfig` or `service network restart` results in multiple _Command failed: Request timed out_ errors and no result.  
+- As of April 2026 the [wrong offset for the *radio* (mtd7) partition](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/207) affecting the original MR600 hasn't been fixed. The (clean or customized) MR600 images will try to use wireless calibration data from the wrong location, which results in low performance for 2.4Ghz and very low power (barely usable) for 5GHz. Restoring the (wrong) "radio" partition with [this binary](https://forum.openwrt.org/t/tp-link-archer-mr600-exploration/65489/139) (or my [local copy](tested-openwrt-builds/mtd7-radio-patch-TESTEDGOOD.bin)) fixes the problem. The router's original radio data (found at the different location in flash) remains intact for when OpenWrt will correct the offset or for returning to the TP-Link OEM firmware.  
 
 ![openwrt](images/openwrt.png)
 
@@ -198,7 +195,7 @@ After another reboot you should find yourself in the permanently installed OpenW
 > [!IMPORTANT]  
 > The Fibocom FG621 modem runs in [RNDIS mode](https://openwrt.org/docs/guide-user/network/wan/wwan/ethernetoverusb_rndis) (internally [mode 38](usb-modes.md)) not QMI as the Qualcomm modem on MR600 does, so the initial WWAN network setup is incorrect. While RNDIS is usable with OpenWrt, for best results the modem should be switched to [NCM mode (mode 36)](usb-modes.md).
 
-_This step is easiest to do with wired WAN connectivity since LTE is not functional yet_
+_Installing packages requires a functional uplink (wired WAN can be used for the next steps)_
 
 For RNDIS mode use the package manager to install
 
@@ -208,7 +205,7 @@ For NCM mode install
 	
     luci-proto-ncm
 	
-Which will in turn also install the required dependencies:
+Which will in turn also install required dependencies:
 
 	chat
 	comgt
@@ -220,10 +217,10 @@ Which will in turn also install the required dependencies:
 	kmod-usb-net-huawei-cdc-ncm
 	comgt-ncm
 	 
-Reboot the router. After the reboot there is a new network device `eth1` or `usb0` (NCM / RNDIS) available.
+Reboot the router. After the reboot there is a new network device `usb0` or `eth1` (depending on NCM / RNDIS) available.
 
 Use LuCI to delete or edit the pre-configured `wwan0`.  
-Create/edit the `wwan0` interface with protocol `DHCP` and attach it to the new `usb0` or the legacy `eth1` (on older OpenWrt) device.
+Create/edit the `wwan0` interface with protocol `DHCP` and attach it to the new `usb0` or `eth1` device.
 Or do this manually in `/etc/config/network`:
 
 	config interface 'wwan0'
@@ -245,7 +242,7 @@ At this point the mobile connection should be up and running (check if the wwan0
 ### Advanced LTE
 
 For signal monitoring and band selection/locking **4IceG**'s awesome [luci-app-3ginfo-lite](https://github.com/4IceG/luci-app-3ginfo-lite) and [luci-app-modemband](https://github.com/4IceG/luci-app-3ginfo-lite) will do miracles.  
-However, the Fibocom modem is not supported in the current builds (as of April 2026) and will require some of manual tinkering. 
+However, the Fibocom modem is not supported in the current builds (as of April 2026) and will require some manual tinkering. 
 
 The install processes for both are best described in their respective repos, but for convenience I have included the versions I successfully tested and modded in the [`lte-advanced/`](lte-advanced/) folder on this repo (in the appropriately numbered order).
 Download and use random files off the internet at your discretion.
@@ -272,13 +269,11 @@ You'll notice there is still no information on the **Details** tab (or even a me
 
 3. Patch `/usr/share/3ginfo-lite/3ginfo.sh` with [these changes](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-bfb9df31e7c9175e9d10b5dca27891b6c20b9997ed0df263b257f34796d5067a).
 
-4. Inside the `/usr/share/3ginfo-lite/modem/` subfolder create a new file **`2cb70a05`** (the VID/PID of the modem) with [this content](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-81e9e3e254e33b574ed506eb3df71e979e8ca6c33126616a4eecc5c9050dbe60).
-
-Or from the console run:
+4. Inside the `/usr/share/3ginfo-lite/modem/` subfolder create a new file **`2cb70a05`** (the VID/PID of the modem) with [this content](https://github.com/4IceG/luci-app-3ginfo-lite/compare/main...thezedt:luci-app-3ginfo-lite:fg621?diff=split&w=#diff-81e9e3e254e33b574ed506eb3df71e979e8ca6c33126616a4eecc5c9050dbe60), or from the console run:
 
 	wget -O /usr/share/3ginfo-lite/modem/usb/2cb70a05 https://raw.githubusercontent.com/thezedt/mr500v1-openwrt/refs/heads/main/lte-advanced/usr_share/3ginfolite/modem/usb/2cb70a05
 
-Once both files are edited/created successfully, the details should finally be displayed in LuCI (after a while or a refresh).
+Once both files are edited/created successfully, the details should finally be displayed in LuCI after a refresh.
 
 ![3ginfolite](images/3ginfo-telekom.png)
 
@@ -302,9 +297,7 @@ Save and Apply.
 
 You'll notice an error message and lack of information on the **Preferred LTE bands** tab.
 
-3. Use SCP or the console to explore the router's filesystem and navigate to `/usr/share/modemband/`. Inside create a new file called **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/modemband/2cb70a05).
-
-Or from the console run:
+3. Use SCP or the console to explore the router's filesystem and navigate to `/usr/share/modemband/`. Inside create a new file called **`2cb70a05`** (the VID/PID of the modem) with [this content](lte-advanced/usr_share/modemband/2cb70a05), or from the console run:
 
 	wget -O /usr/share/modemband/2cb70a05 https://raw.githubusercontent.com/thezedt/mr500v1-openwrt/refs/heads/main/lte-advanced/usr_share/modemband/2cb70a05
 
@@ -327,7 +320,7 @@ Customize the packages list to:
 
 > apk-mbedtls base-files ca-bundle dnsmasq dropbear firewall4 fstools kmod-crypto-hw-eip93 kmod-gpio-button-hotplug kmod-leds-gpio kmod-nft-offload libc libgcc libustream-mbedtls logd mtd netifd nftables odhcp6c odhcpd-ipv6only ppp ppp-mod-pppoe procd-ujail uboot-envtools uci uclient-fetch urandom-seed urngd wpad-basic-mbedtls kmod-mt7603 kmod-mt7615e kmod-mt7663-firmware-ap kmod-usb3 -uboot-envtools luci **kmod-usb-serial-option kmod-usb-net-cdc-ncm luci-proto-ncm comgt comgt-ncm**
 
-Packages marked in bold are the extra needed ones. Remove the two preset `qmi`-related packages to save some flash space for future use.
+Packages marked in bold are the extra ones needed. Remove the existing *qmi* packages (`kmod-usb-net-qmi-wwan`, `uqmi` and `luci-proto-qmi`) to save some flash space for future use. With OpenWrt 25.12 and newer `luci-app-attendedsysupgrade` should also be removed as the attended sysupgrade would (re)install a non-customized MR600 image.
 
 Use the **first boot (uci-defaults)** script below for minimal interface configuration:
 
@@ -343,7 +336,9 @@ Or use the **[advanced uci-defaults script](helper-scripts/defaults.sh)** for ad
 * configures interface LEDs
 * adds helper script and cron job to handle the extra 4G+ and signal LEDs functionality
 
-Download the custom generated `sysupgrade` image and use it to flash the router at the second step (or later as an upgrade). The builder does not gneerate a custom kernel image so you'll need to rely on the default MR600 kernel image for the initial TFTP boot. 
+Download the custom generated `sysupgrade` image and use it to flash the router at the second step (or later as an upgrade). The builder does not generate a custom kernel image so you'll need to rely on the default MR600 kernel image for the initial TFTP boot. 
+
+![openwrt-image-builder](images/openwrt-builder.png)
 
 ## Failsafe
 
